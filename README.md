@@ -1,4 +1,7 @@
 # qplant
-App QPlant
+App QPlant.
+
+# Frameworks adopted:
+- Tensorflow
 
 
