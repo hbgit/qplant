@@ -24,16 +24,16 @@ jobs:
           channel: 'dev'
 
       - name: Build APK
-      - run: flutter  config --enable-web
-      - run: flutter  config --enable-linux-desktop
-      - run: flutter pub get
-      - run: flutter build apk
+        run: flutter  config --enable-web
+        run: flutter  config --enable-linux-desktop
+        run: flutter pub get
+        run: flutter build apk
 
       - name: Testing
       # Check for any formatting issues in the code.
-      - run: flutter format --set-exit-if-changed .
-      - run: flutter analyze .
-      - run: flutter test
+        run: flutter format --set-exit-if-changed .
+        run: flutter analyze .
+        run: flutter test
 
       - name: Create a Release APK
       # Upload generated apk to the artifacts.
