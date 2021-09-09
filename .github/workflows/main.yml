@@ -80,12 +80,8 @@ jobs:
       # Handle the deploy process of your project to GitHub Pages.
       # The site will be published as <yourusername>.github.io/<repo-name>
       # https://github.com/JamesIves/github-pages-deploy-action
-      - uses: JamesIves/github-pages-deploy-action@releases/v3
+      - uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           SSH: true
           BASE_BRANCH: main
           BRANCH: gh-pages
-          FOLDER: build/web
-
-
-
