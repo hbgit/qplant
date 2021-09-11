@@ -33,7 +33,7 @@ jobs:
     # Check for any formatting issues in the code.
     - run: flutter format --set-exit-if-changed .
     - run: flutter analyze .
-    - run: flutter test
+    #- run: flutter test
 
     #- name: Create a Release APK
     # Upload generated apk to the artifacts.

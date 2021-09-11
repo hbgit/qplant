@@ -6,4 +6,3 @@ void main() {
   final StartApp qplant = StartApp();
   runApp(qplant);
 }
-
