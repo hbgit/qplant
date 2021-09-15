@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/view/AddNewUser.dart';
+import 'package:qplant/view/ForgotPassword.dart';
 
 class Login extends StatefulWidget{
   //Login({Key key}) : super(key: key);
@@ -196,7 +198,7 @@ class _LoginState extends State<Login>{
                             onPressed: () {
                               print("Enviar Login");
                             },
-                            child: new Text("CADASTRAR"),
+                            child: new Text("ACESSAR"),
                           ),
                         ),
                         SizedBox(
@@ -209,6 +211,8 @@ class _LoginState extends State<Login>{
                               onTap: (){
                                 //Navigator.pushNamed(context, "myRoute");
                                 print("Esqueceu a senha?");
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => ForgotPassword()));
                               },
                               child: Text(
                                 "Esqueceu a senha?",
@@ -221,6 +225,9 @@ class _LoginState extends State<Login>{
                             GestureDetector(
                               onTap: (){
                                 print("Novo aqui? Cadastrar!");
+                                //Navigator.pushNamed(context, "myRoute");
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => AddNewUser()));
                               },
                               child: Text(
                                 "Novo aqui? Cadastrar!",

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:qplant/view/PinCodeRecovery.dart';
 import 'package:qplant/view/Splash.dart';
+import 'package:qplant/view/AddNewUser.dart';
+import 'package:qplant/view/ForgotPassword.dart';
 
 class RouteGenerator {
   static const String ROUTE_ROOT = "/";
   static const String ROUTE_HOME = "/home";
   static const String ROUTE_LOGIN = "/login";
+  static const String ROUTE_ADD_NEW_USER = "/addnewuser";
+  static const String ROUTE_FORGOT_PASSWORD = "/forgotpwd";
+  static const String ROUTE_SET_PIN_CODE = "/pincode";
   static const String ROUTE_SPLASH = "/splash";
 
   static Route<dynamic> generatorRoute(RouteSettings settings) {
@@ -27,6 +33,12 @@ class RouteGenerator {
             ),
           );
         });
+      case ROUTE_ADD_NEW_USER:
+        return MaterialPageRoute(builder: (_) => AddNewUser());
+      case ROUTE_FORGOT_PASSWORD:
+        return MaterialPageRoute(builder: (_) => ForgotPassword());
+      case ROUTE_SET_PIN_CODE:
+        return MaterialPageRoute(builder: (_) => PinCodeRecovery());
       default:
         return MaterialPageRoute(builder: (_) {
           return Scaffold(
