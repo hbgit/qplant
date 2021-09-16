@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/AddNewUser.dart';
 import 'package:qplant/view/ForgotPassword.dart';
+import 'package:qplant/view/Home.dart';
 
 class Login extends StatefulWidget{
   //Login({Key key}) : super(key: key);
@@ -11,10 +13,95 @@ class Login extends StatefulWidget{
 }
 
 class _LoginState extends State<Login>{
+  GlobalKey<FormState> _key = new GlobalKey();
 
   bool _validate = false;
   late String _email, _password;
   String _msgError = "";
+
+  String? _validatePassWord(String? value) {
+    if (value!.isEmpty) {
+      return "Senha vazia.";
+    }else if(value == "123"){
+      return null;
+    }
+  }
+
+  String? _validateEmail(String? value) {
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regExp = new RegExp(pattern);
+    if (value!.isEmpty) {
+      return "Email vazio.";
+    } else if (!regExp.hasMatch(value)) {
+      return "E-mail inválido";
+    } else {
+      return null;
+    }
+  }
+
+  _showDialog(BuildContext context){
+    AlertDialog showDia = AlertDialog(
+      title: Text("Sign In Error"),
+      content: Text(_msgError),
+      actions: [
+        FlatButton(
+          child: Text("OK"),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        )
+      ],
+    );
+
+    showDialog(
+        context: context,
+        builder: (context){
+          return showDia;
+        }
+    );
+  }
+
+  // _signIn(User user){
+  //
+  //   FirebaseAuth auth = FirebaseAuth.instance;
+  //
+  //   auth.signInWithEmailAndPassword(
+  //       email: user.email,
+  //       password: user.password
+  //   ).then((firebaseUser){
+  //     Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
+  //   }).catchError((onError){
+  //     setState(() {
+  //       _msgError = "E-mail or Password is not correct, please try again.";
+  //       _showDialog(context);
+  //     });
+  //   });
+  //
+  // }
+
+  _sendToServer() {
+    if (_key.currentState!.validate()) {
+      // No any error in validation
+      _key.currentState!.save();
+
+      print("Email $_email");
+      print("Pass $_password");
+
+      // User user = User();
+      // user.email = _email;
+      // user.password = _password;
+
+      //_signIn(user);
+      Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
+
+    } else {
+      // validation error
+      setState(() {
+        _validate = true;
+      });
+    }
+  }
 
   //Login Screen
   @override
@@ -141,6 +228,7 @@ class _LoginState extends State<Login>{
                   height: 20,
                 ),
                 Form(
+                    key: _key,
                     child: Column(
                       children: [
                         TextFormField(
@@ -154,7 +242,14 @@ class _LoginState extends State<Login>{
                               color: Colors.black,
                               fontSize: 20
                             ),
+                            errorStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15
+                            ),
                           ),
+                          validator: (value){
+                            return _validateEmail(value);
+                          },
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (String? v){
                             _email = v!;
@@ -174,8 +269,15 @@ class _LoginState extends State<Login>{
                                 color: Colors.black,
                                 fontSize: 20
                             ),
+                            errorStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15
+                            ),
                           ),
                           obscureText: true,
+                          validator: (value){
+                            return _validatePassWord(value);
+                          },
                           keyboardType: TextInputType.text,
                           onSaved: (String? v){
                             _password = v!;
@@ -193,10 +295,13 @@ class _LoginState extends State<Login>{
                                 textStyle: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                )
+                                ),
                             ),
                             onPressed: () {
                               print("Enviar Login");
+                              _sendToServer();
+                              // Navigator.push(context,
+                              //     MaterialPageRoute(builder: (context) => Home()));
                             },
                             child: new Text("ACESSAR"),
                           ),
