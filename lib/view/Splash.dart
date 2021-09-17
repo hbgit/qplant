@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qplant/view/Login.dart';
+//import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -17,6 +19,12 @@ class _SplashViewState extends State<Splash> {
       _route = isLogged ? "/home" : "/";
       return true;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting('pt_BR', null); //very important
   }
 
   // Splash Screen
