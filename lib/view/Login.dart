@@ -111,7 +111,7 @@ class _LoginState extends State<Login>{
         decoration: BoxDecoration(
           color: Color(0xff075E54)
         ),
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.all(10),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -232,6 +232,9 @@ class _LoginState extends State<Login>{
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: TextEditingController(
+                            text: "test@test.com"
+                          ),
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -259,6 +262,9 @@ class _LoginState extends State<Login>{
                           height: 20,
                         ),
                         TextFormField(
+                          controller: TextEditingController(
+                              text: "1234"
+                          ),
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -284,10 +290,11 @@ class _LoginState extends State<Login>{
                           },
                         ),
                         SizedBox(
-                          height: 50,
+                          height: 30,
                         ),
                         SizedBox(
                           width: double.infinity,
+                          height: 50,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 onPrimary: Colors.white,
