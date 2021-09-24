@@ -6,6 +6,16 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/MyCatalog.dart';
 
+// the seq is equal to the _getDrawerItem function
+enum HAM_MENU {
+  home,
+  id_planta,
+  my_catalog,
+  history,
+  about_app,
+  logout
+}
+
 class Home extends StatefulWidget {
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -13,9 +23,11 @@ class Home extends StatefulWidget {
 
 class _HomeViewState extends State<Home> {
   //final Auth _auth = Auth();
+  // Menu var
   int _selectedIndex = 0;
-  var _mapMenu = {'home':0,'id_planta':1,'meu_catalogo':2,'historico':3,'sobre_app':4,'sair_conta':5};
   String _menuPath = "Menu";
+
+  // Header
   String _formattedDate =
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
 
@@ -26,13 +38,24 @@ class _HomeViewState extends State<Home> {
 
   _getDrawerItem(int pos) {
     switch (pos) {
+      case 0:
+        print("Home");
+        break;
       case 1:
-        print("Meu Catalago");
-        //Navigator.pushNamed(context, RouteGenerator.ROUTE_MY_CATALOG);
-        return MyCatalog();
+        print("Identificar Planta");
         break;
       case 2:
+        print("Meu Catalago");
+        return MyCatalog();
+        break;
+      case 3:
         print("Histórico");
+        break;
+      case 4:
+        print("Sobre o APP");
+        break;
+      case 5:
+        print("Sair da Conta");
         break;
       default:
         break;
@@ -40,214 +63,87 @@ class _HomeViewState extends State<Home> {
   }
 
   _homeScreen(){
-    print("TELA");
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: (){
-            print("Card: Meu Catálago");
-            setState(() {
-              _menuPath = "Classificador";
-              _selectedIndex = 1;
-            });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-                    top: BorderSide(
-                        width: 10.0,
-                        color: Colors.greenAccent
-                    )
-                )
-            ),
-            padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-            height: 151,
-            width: double.maxFinite,
-            child: Card(
-              elevation: 5,
-              child: Stack(
-                children: [
-                  Align(
-                    child: Stack(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.camera,
-                                    color: Color(0xff075E54),
-                                    size: 55,
-                                  ),
-                                  SizedBox(
-                                    width: 45,
-                                  ),
-                                  Text(
-                                      'Identificar Planta',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color(0xff075E54),
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold
-                                      )
-                                  ),
-                                  SizedBox(
-                                    width: 25,
-                                  ),
-                                  FaIcon(
-                                    FontAwesomeIcons.arrowAltCircleRight,
-                                    color: Color(0xff075E54),
-                                    size: 35,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: (){
-            print("Card: Meu Catálago");
-            setState(() {
-              _menuPath = "Meu Catálago";
-              _selectedIndex = 1;
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-            height: 151,
-            width: double.maxFinite,
-            child: Card(
-              elevation: 5,
-              child: Stack(
-                children: [
-                  Align(
-                    child: Stack(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.image,
-                                    color: Color(0xff075E54),
-                                    size: 55,
-                                  ),
-                                  SizedBox(
-                                    width: 45,
-                                  ),
-                                  Text(
-                                      'Meu Catálago',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color(0xff075E54),
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold
-                                      )
-                                  ),
-                                  SizedBox(
-                                    width: 65,
-                                  ),
-                                  FaIcon(
-                                    FontAwesomeIcons.arrowAltCircleRight,
-                                    color: Color(0xff075E54),
-                                    size: 35,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: (){
-            print("Card: Meu Catálago");
-            setState(() {
-              _menuPath = "Meu Catálago";
-              _selectedIndex = 1;
-            });
-          },
-          child: Container(
-            padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-            height: 151,
-            width: double.maxFinite,
-            child: Card(
-              elevation: 5,
-              child: Stack(
-                children: [
-                  Align(
-                    child: Stack(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  FaIcon(
-                                    FontAwesomeIcons.history,
-                                    color: Color(0xff075E54),
-                                    size: 55,
-                                  ),
-                                  SizedBox(
-                                    width: 45,
-                                  ),
-                                  Text(
-                                      'Histórico',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          color: Color(0xff075E54),
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold
-                                      )
-                                  ),
-                                  SizedBox(
-                                    width: 115,
-                                  ),
-                                  FaIcon(
-                                    FontAwesomeIcons.arrowAltCircleRight,
-                                    color: Color(0xff075E54),
-                                    size: 35,
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
+    return Container(
+      padding: EdgeInsets.all(13),
+      //child: ,
     );
+      //Column(
+      // children: [
+      //   GestureDetector(
+      //     onTap: (){
+      //       print("Card: Meu Catálago");
+      //       setState(() {
+      //         _menuPath = "Classificador";
+      //         _selectedIndex = 1;
+      //       });
+      //     },
+      //     child: Container(
+      //       decoration: BoxDecoration(
+      //           border: Border(
+      //               top: BorderSide(
+      //                   width: 10.0,
+      //                   color: Colors.greenAccent
+      //               )
+      //           )
+      //       ),
+      //       padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
+      //       height: 151,
+      //       width: double.maxFinite,
+      //       child: Card(
+      //         elevation: 5,
+      //         child: Stack(
+      //           children: [
+      //             Align(
+      //               child: Stack(
+      //                 children: [
+      //                   Column(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //                     children: [
+      //                       Padding(
+      //                         padding: EdgeInsets.all(10),
+      //                         child: Row(
+      //                           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //                           children: [
+      //                             FaIcon(
+      //                               FontAwesomeIcons.camera,
+      //                               color: Color(0xff075E54),
+      //                               size: 55,
+      //                             ),
+      //                             SizedBox(
+      //                               width: 45,
+      //                             ),
+      //                             Text(
+      //                                 'Identificar Planta',
+      //                                 textAlign: TextAlign.left,
+      //                                 style: TextStyle(
+      //                                     color: Color(0xff075E54),
+      //                                     fontSize: 25,
+      //                                     fontWeight: FontWeight.bold
+      //                                 )
+      //                             ),
+      //                             SizedBox(
+      //                               width: 25,
+      //                             ),
+      //                             FaIcon(
+      //                               FontAwesomeIcons.arrowAltCircleRight,
+      //                               color: Color(0xff075E54),
+      //                               size: 35,
+      //                             ),
+      //                           ],
+      //                         ),
+      //                       )
+      //                     ],
+      //                   ),
+      //                 ],
+      //               ),
+      //             )
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ],
+    //);
   }
 
   // Home Screen
@@ -328,10 +224,38 @@ class _HomeViewState extends State<Home> {
                     ),
                     selected: 0 == _selectedIndex,
                     onTap: () {
+                      print(HAM_MENU.home);
                       setState(() {
                         _menuPath = "Menu";
                       });
-                      _onSelectItem(0);
+                      _onSelectItem(HAM_MENU.home.index);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            ListView(
+              shrinkWrap: true,
+              children: [
+                Ink(
+                  color: Color(0xff0c7e47),
+                  child: ListTile(
+                    leading: FaIcon(
+                      FontAwesomeIcons.search,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    title: Text(
+                        'Identificar Planta',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.white, fontSize: 15)
+                    ),
+                    selected: 1 == _selectedIndex,
+                    onTap: () {
+                      setState(() {
+                        _menuPath = "Identificar Planta";
+                      });
+                      _onSelectItem(HAM_MENU.id_planta.index);
                     },
                   ),
                 ),
@@ -358,7 +282,7 @@ class _HomeViewState extends State<Home> {
                       setState(() {
                         _menuPath = "Meu Catálago";
                       });
-                      _onSelectItem(1);
+                      _onSelectItem(HAM_MENU.my_catalog.index);
                     },
                   ),
                 ),
@@ -385,7 +309,7 @@ class _HomeViewState extends State<Home> {
                       setState(() {
                         _menuPath = "Histórico";
                       });
-                      //print("Text");
+                      _onSelectItem(HAM_MENU.history.index);
                     },
                   ),
                 ),
@@ -412,6 +336,7 @@ class _HomeViewState extends State<Home> {
                       setState(() {
                         _menuPath = "Sobre o APP";
                       });
+                      _onSelectItem(HAM_MENU.about_app.index);
                     },
                   ),
                 ),
@@ -438,7 +363,7 @@ class _HomeViewState extends State<Home> {
                       setState(() {
                         _menuPath = "Sair da Conta";
                       });
-                      //print("Text");
+                      _onSelectItem(HAM_MENU.logout.index);
                     },
                   ),
                 ),
@@ -448,6 +373,44 @@ class _HomeViewState extends State<Home> {
         ),
       ),
       body: _selectedIndex == 0 ? _homeScreen() : _getDrawerItem(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index){
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.shifting,
+        items: [
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.image,
+              color: Colors.white,
+              size: 30,
+            ),
+            label: "Meu Catálogo",
+            backgroundColor: Color(0xff0c7e47),
+          ),
+          BottomNavigationBarItem(
+              icon: FaIcon(
+                FontAwesomeIcons.history,
+                color: Colors.white,
+                size: 30,
+              ),
+              label: "Histórico",
+              backgroundColor: Color(0xff20b2aa),
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.search,
+              color: Colors.white,
+              size: 30,
+            ),
+            label: "Planta?",
+            backgroundColor: Color(0xff3cb371),
+          ),
+        ],
+      ),
     );
   }
 }
