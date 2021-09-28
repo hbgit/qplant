@@ -24,7 +24,7 @@ class Home extends StatefulWidget {
 class _HomeViewState extends State<Home> {
   //final Auth _auth = Auth();
   // Menu var
-  int _selectedIndex = 0;
+  int _selectedIndex = HAM_MENU.my_catalog.index;
   String _menuPath = "Menu";
 
   // Header
@@ -62,89 +62,6 @@ class _HomeViewState extends State<Home> {
     }
   }
 
-  _homeScreen(){
-    return Container(
-      padding: EdgeInsets.all(13),
-      //child: ,
-    );
-      //Column(
-      // children: [
-      //   GestureDetector(
-      //     onTap: (){
-      //       print("Card: Meu Catálago");
-      //       setState(() {
-      //         _menuPath = "Classificador";
-      //         _selectedIndex = 1;
-      //       });
-      //     },
-      //     child: Container(
-      //       decoration: BoxDecoration(
-      //           border: Border(
-      //               top: BorderSide(
-      //                   width: 10.0,
-      //                   color: Colors.greenAccent
-      //               )
-      //           )
-      //       ),
-      //       padding: EdgeInsets.fromLTRB(10, 30, 10, 10),
-      //       height: 151,
-      //       width: double.maxFinite,
-      //       child: Card(
-      //         elevation: 5,
-      //         child: Stack(
-      //           children: [
-      //             Align(
-      //               child: Stack(
-      //                 children: [
-      //                   Column(
-      //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //                     children: [
-      //                       Padding(
-      //                         padding: EdgeInsets.all(10),
-      //                         child: Row(
-      //                           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //                           children: [
-      //                             FaIcon(
-      //                               FontAwesomeIcons.camera,
-      //                               color: Color(0xff075E54),
-      //                               size: 55,
-      //                             ),
-      //                             SizedBox(
-      //                               width: 45,
-      //                             ),
-      //                             Text(
-      //                                 'Identificar Planta',
-      //                                 textAlign: TextAlign.left,
-      //                                 style: TextStyle(
-      //                                     color: Color(0xff075E54),
-      //                                     fontSize: 25,
-      //                                     fontWeight: FontWeight.bold
-      //                                 )
-      //                             ),
-      //                             SizedBox(
-      //                               width: 25,
-      //                             ),
-      //                             FaIcon(
-      //                               FontAwesomeIcons.arrowAltCircleRight,
-      //                               color: Color(0xff075E54),
-      //                               size: 35,
-      //                             ),
-      //                           ],
-      //                         ),
-      //                       )
-      //                     ],
-      //                   ),
-      //                 ],
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ],
-    //);
-  }
 
   // Home Screen
   @override
@@ -372,7 +289,7 @@ class _HomeViewState extends State<Home> {
           ],
         ),
       ),
-      body: _selectedIndex == 0 ? _homeScreen() : _getDrawerItem(_selectedIndex),
+      body: _getDrawerItem(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index){
