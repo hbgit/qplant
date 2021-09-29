@@ -62,6 +62,19 @@ class _HomeViewState extends State<Home> {
     }
   }
 
+  int _selectOpBtNav(int index){
+    switch(index){
+      case 2:
+        return 0;
+      case 3:
+        return 1;
+      case 1:
+        return 2;
+      default:
+        return 0;
+    }
+  }
+
 
   // Home Screen
   @override
@@ -291,10 +304,18 @@ class _HomeViewState extends State<Home> {
       ),
       body: _getDrawerItem(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: _selectOpBtNav(_selectedIndex),
         onTap: (index){
+          //
+          print("BTNav $index");
           setState(() {
-            _selectedIndex = index;
+            if(index == 0){
+              _selectedIndex = HAM_MENU.my_catalog.index;
+            }else if(index == 1){
+              _selectedIndex = HAM_MENU.history.index;
+            }else{
+              _selectedIndex = HAM_MENU.id_planta.index;
+            }
           });
         },
         type: BottomNavigationBarType.shifting,
