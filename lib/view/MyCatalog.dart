@@ -15,6 +15,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
 
   @override
   void initState() {
+    _genDemoPlantData();
     super.initState();
   }
 
@@ -47,7 +48,6 @@ class _MyCatalogViewState extends State<MyCatalog> {
   // Home Screen
   @override
   Widget build(BuildContext context) {
-    _genDemoPlantData();
     return FutureBuilder<List<Plant>>(
         //future: _listPlant,
         builder: (context, snapshot) {

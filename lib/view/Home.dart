@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:qplant/controller/RouteGenerator.dart';
+import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/MyCatalog.dart';
 
 // the seq is equal to the _getDrawerItem function
@@ -25,6 +26,7 @@ class _HomeViewState extends State<Home> {
   //final Auth _auth = Auth();
   // Menu var
   int _selectedIndex = HAM_MENU.my_catalog.index;
+  int _lastSelectedIndex = 0;
   String _menuPath = "Menu";
 
   // Header
@@ -32,8 +34,12 @@ class _HomeViewState extends State<Home> {
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
 
   _onSelectItem(int index) {
-    setState(() => _selectedIndex = index);
-    Navigator.of(context).pop();
+    if(index == -1){
+      Navigator.of(context).pop();
+    }else{
+      setState(() => _selectedIndex = index);
+      Navigator.of(context).pop();
+    }
   }
 
   _getDrawerItem(int pos) {
@@ -43,11 +49,12 @@ class _HomeViewState extends State<Home> {
         break;
       case 1:
         print("Identificar Planta");
-        break;
+        return IdentPlant();
+        //break;
       case 2:
         print("Meu Catalago");
         return MyCatalog();
-        break;
+        //break;
       case 3:
         print("Histórico");
         break;
@@ -143,22 +150,21 @@ class _HomeViewState extends State<Home> {
                   color: Color(0xff0c7e47),
                   child: ListTile(
                     leading: FaIcon(
-                      FontAwesomeIcons.home,
+                      FontAwesomeIcons.exchangeAlt,
                       color: Colors.white,
                       size: 30,
                     ),
                     title: Text(
-                        'Home',
+                        'Voltar',
                         textAlign: TextAlign.left,
                         style: TextStyle(color: Colors.white, fontSize: 15)
                     ),
-                    selected: 0 == _selectedIndex,
+                    //selected: 0 == _selectedIndex,
                     onTap: () {
                       print(HAM_MENU.home);
-                      setState(() {
-                        _menuPath = "Menu";
-                      });
-                      _onSelectItem(HAM_MENU.home.index);
+                      _onSelectItem(-1);
+                      // Navigator.of(context).pop();
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => MyCatalog()));
                     },
                   ),
                 ),
@@ -180,7 +186,7 @@ class _HomeViewState extends State<Home> {
                         textAlign: TextAlign.left,
                         style: TextStyle(color: Colors.white, fontSize: 15)
                     ),
-                    selected: 1 == _selectedIndex,
+                    //selected: 1 == _selectedIndex,
                     onTap: () {
                       setState(() {
                         _menuPath = "Identificar Planta";
@@ -207,7 +213,7 @@ class _HomeViewState extends State<Home> {
                         textAlign: TextAlign.left,
                         style: TextStyle(color: Colors.white, fontSize: 15)
                     ),
-                    selected: 1 == _selectedIndex,
+                    //selected: 1 == _selectedIndex,
                     onTap: () {
                       setState(() {
                         _menuPath = "Meu Catálago";
@@ -311,10 +317,19 @@ class _HomeViewState extends State<Home> {
           setState(() {
             if(index == 0){
               _selectedIndex = HAM_MENU.my_catalog.index;
+              setState(() {
+                _menuPath = "Meu Catálago";
+              });
             }else if(index == 1){
               _selectedIndex = HAM_MENU.history.index;
+              setState(() {
+                _menuPath = "Meu Catálago";
+              });
             }else{
               _selectedIndex = HAM_MENU.id_planta.index;
+              setState(() {
+                _menuPath = "Identificar Planta";
+              });
             }
           });
         },
