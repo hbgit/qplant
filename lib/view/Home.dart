@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/MyCatalog.dart';
+import 'package:logger/logger.dart';
 
 // the seq is equal to the _getDrawerItem function
 enum HAM_MENU { home, id_planta, my_catalog, history, about_app, logout }
@@ -24,7 +25,17 @@ class _HomeViewState extends State<Home> {
   String _formattedDate =
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
 
+  final logger = new Logger(
+    printer: PrettyPrinter(
+        methodCount: 1,
+        lineLength: 50,
+        errorMethodCount: 3,
+        colors: true,
+        printEmojis: true),
+  );
+
   _onSelectItem(int index) {
+    logger.d("Debug Log");
     if (index == -1) {
       Navigator.of(context).pop();
     } else {
@@ -36,6 +47,7 @@ class _HomeViewState extends State<Home> {
   _getDrawerItem(int pos) {
     switch (pos) {
       case 0:
+        logger.d("Debug Log");
         print("Home");
         break;
       case 1:

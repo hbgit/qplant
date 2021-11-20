@@ -33,6 +33,7 @@ dependencies:
   intl: ^0.17.0
   flutter_rating_bar: ^4.0.0
   image_picker: ^0.8.3
+  logger: ^1.0.0
 
 dev_dependencies:
   flutter_test:
