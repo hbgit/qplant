@@ -24,8 +24,8 @@ class _MyCatalogViewState extends State<MyCatalog> {
     List<String> local = ["AM", "PB", "CE"];
     Plant p1 = Plant(
         id: "d011",
-        vernacular_name: "vernacular_name",
-        scientific_name: "scientific_name",
+        vernacularName: "vernacular_name",
+        scientificName: "scientific_name",
         country: "country",
         locality: local,
         flower: true,
@@ -35,8 +35,8 @@ class _MyCatalogViewState extends State<MyCatalog> {
 
     Plant p2 = Plant(
         id: "d012",
-        vernacular_name: "vernacular_name 2",
-        scientific_name: "scientific_name 2",
+        vernacularName: "vernacular_name 2",
+        scientificName: "scientific_name 2",
         country: "country",
         locality: local,
         flower: true,
@@ -55,7 +55,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
       if (_listPlant.isNotEmpty) {
         return ListView.separated(
             itemBuilder: (context, index) {
-              Plant tmp_p = _listPlant[index];
+              Plant tmpP = _listPlant[index];
               return GestureDetector(
                 onTap: () {
                   print("Card plant clicked");
@@ -97,7 +97,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        tmp_p.vernacular_name,
+                                        tmpP.vernacularName,
                                         style: TextStyle(
                                             color: Colors.green,
                                             fontWeight: FontWeight.bold,
@@ -151,7 +151,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        tmp_p.vernacular_name,
+                                        tmpP.vernacularName,
                                         style: TextStyle(
                                             color: Colors.green,
                                             fontWeight: FontWeight.bold,

@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/AddNewUser.dart';
 import 'package:qplant/view/ForgotPassword.dart';
-import 'package:qplant/view/Home.dart';
 
 class Login extends StatefulWidget {
   //Login({Key key}) : super(key: key);
@@ -17,7 +16,7 @@ class _LoginState extends State<Login> {
 
   bool _validate = false;
   late String _email, _password;
-  String _msgError = "";
+  //String _msgError = "";
 
   String? _validatePassWord(String? value) {
     if (value!.isEmpty) {
@@ -40,26 +39,26 @@ class _LoginState extends State<Login> {
     }
   }
 
-  _showDialog(BuildContext context) {
-    AlertDialog showDia = AlertDialog(
-      title: Text("Sign In Error"),
-      content: Text(_msgError),
-      actions: [
-        FlatButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
-      ],
-    );
-
-    showDialog(
-        context: context,
-        builder: (context) {
-          return showDia;
-        });
-  }
+  // _showDialog(BuildContext context) {
+  //   AlertDialog showDia = AlertDialog(
+  //     title: Text("Sign In Error"),
+  //     content: Text(_msgError),
+  //     actions: [
+  //       FlatButton(
+  //         child: Text("OK"),
+  //         onPressed: () {
+  //           Navigator.pop(context);
+  //         },
+  //       )
+  //     ],
+  //   );
+  //
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return showDia;
+  //       });
+  // }
 
   // _signIn(User user){
   //
@@ -97,6 +96,7 @@ class _LoginState extends State<Login> {
       // validation error
       setState(() {
         _validate = true;
+        print(_validate);
       });
     }
   }

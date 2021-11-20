@@ -9,9 +9,9 @@ class AddNewUser extends StatefulWidget {
 }
 
 class _LoginState extends State<AddNewUser> {
-  bool _validate = false;
+  //bool _validate = false;
   late String _email, _password;
-  String _msgError = "";
+  //String _msgError = "";
 
   //Login Screen
   @override
@@ -71,6 +71,7 @@ class _LoginState extends State<AddNewUser> {
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (String? v) {
                         _email = v!;
+                        print(_email);
                       },
                     ),
                     SizedBox(
@@ -90,6 +91,7 @@ class _LoginState extends State<AddNewUser> {
                       keyboardType: TextInputType.text,
                       onSaved: (String? v) {
                         _password = v!;
+                        print(_password);
                       },
                     ),
                     SizedBox(

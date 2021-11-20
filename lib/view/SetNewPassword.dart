@@ -10,9 +10,9 @@ class SetNewPassword extends StatefulWidget {
 }
 
 class _LoginState extends State<SetNewPassword> {
-  bool _validate = false;
-  late String _email, _password;
-  String _msgError = "";
+  //bool _validate = false;
+  late String _password;
+  //String _msgError = "";
 
   //Login Screen
   @override
@@ -55,6 +55,7 @@ class _LoginState extends State<SetNewPassword> {
                       keyboardType: TextInputType.text,
                       onSaved: (String? v) {
                         _password = v!;
+                        print(_password);
                       },
                     ),
                     SizedBox(

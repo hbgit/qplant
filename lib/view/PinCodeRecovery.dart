@@ -13,12 +13,14 @@ class PinCodeRecovery extends StatefulWidget {
 }
 
 class _LoginState extends State<PinCodeRecovery> {
-  bool _validate = false;
-  late String _email, _password;
-  String _msgError = "";
+  //bool _validate = false;
+  late String _email;
+  //, _password;
+  //String _msgError = "";
 
   TextEditingController textEditingController = TextEditingController();
-  StreamController<ErrorAnimationType>? errorController;
+  StreamController<ErrorAnimationType> errorController =
+      StreamController<ErrorAnimationType>();
 
   bool hasError = false;
   String currentText = "";
@@ -174,7 +176,7 @@ class _LoginState extends State<PinCodeRecovery> {
                                   print(currentText.length);
                                   if (currentText.length < 4 ||
                                       currentText.isEmpty) {
-                                    errorController!.add(ErrorAnimationType
+                                    errorController.add(ErrorAnimationType
                                         .shake); // Triggering error shake animation
                                     setState(() => hasError = true);
                                   } else {
@@ -192,6 +194,7 @@ class _LoginState extends State<PinCodeRecovery> {
                                       },
                                     );
                                   }
+                                  //errorController.close();
                                 },
                                 child: new Text("VERIFICAR"),
                               ),

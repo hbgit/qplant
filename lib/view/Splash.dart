@@ -14,9 +14,9 @@ class _SplashViewState extends State<Splash> {
   String _route = "/";
 
   Future<bool> _initialCheck() async {
-    bool isLogged = false; //await _auth.isLogged();
+    // bool isLogged = false; //await _auth.isLogged();
     return Future.delayed(const Duration(seconds: 5)).then((value) {
-      _route = isLogged ? "/home" : "/";
+      //_route = isLogged ? "/home" : "/";
       return true;
     });
   }

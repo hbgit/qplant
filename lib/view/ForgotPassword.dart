@@ -10,9 +10,10 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _LoginState extends State<ForgotPassword> {
-  bool _validate = false;
-  late String _email, _password;
-  String _msgError = "";
+  //bool _validate = false;
+  late String _email;
+  //, _password;
+  //String _msgError = "";
 
   //Login Screen
   @override
@@ -85,6 +86,7 @@ class _LoginState extends State<ForgotPassword> {
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (String? v) {
                         _email = v!;
+                        print(_email);
                       },
                     ),
                     SizedBox(

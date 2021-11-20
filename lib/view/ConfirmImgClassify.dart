@@ -13,28 +13,28 @@ class ConfirmImgClassify extends StatefulWidget {
 
 class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
   late XFile _image;
-  late String _urlRecoveryImage;
+  //late String _urlRecoveryImage;
 
-  Future _recoveryImage(String fromImage) async {
-    late XFile imageOp;
-    final ImagePicker _imgPicker = ImagePicker();
-
-    switch (fromImage) {
-      case "camera":
-        imageOp = (await _imgPicker.pickImage(source: ImageSource.camera))!;
-        break;
-      case "galeria":
-        print(">> Galeria");
-        imageOp = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
-        break;
-    }
-
-    print(imageOp.path);
-    setState(() {
-      _image = imageOp;
-      print("Path image: ${_image.path}");
-    });
-  }
+  // Future _recoveryImage(String fromImage) async {
+  //   late XFile imageOp;
+  //   final ImagePicker _imgPicker = ImagePicker();
+  //
+  //   switch (fromImage) {
+  //     case "camera":
+  //       imageOp = (await _imgPicker.pickImage(source: ImageSource.camera))!;
+  //       break;
+  //     case "galeria":
+  //       print(">> Galeria");
+  //       imageOp = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
+  //       break;
+  //   }
+  //
+  //   print(imageOp.path);
+  //   setState(() {
+  //     _image = imageOp;
+  //     print("Path image: ${_image.path}");
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

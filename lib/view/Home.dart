@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/MyCatalog.dart';
 
@@ -19,7 +17,7 @@ class _HomeViewState extends State<Home> {
   //final Auth _auth = Auth();
   // Menu var
   int _selectedIndex = HAM_MENU.my_catalog.index;
-  int _lastSelectedIndex = 0;
+  //int _lastSelectedIndex = 0;
   String _menuPath = "Menu";
 
   // Header

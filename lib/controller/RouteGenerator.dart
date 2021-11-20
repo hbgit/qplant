@@ -20,7 +20,7 @@ class RouteGenerator {
   static const String ROUTE_SPLASH = "/splash";
 
   static Route<dynamic> generatorRoute(RouteSettings settings) {
-    var args = settings.arguments;
+    //var args = settings.arguments;
     switch (settings.name) {
       case ROUTE_SPLASH:
         return MaterialPageRoute(builder: (_) => Splash());
