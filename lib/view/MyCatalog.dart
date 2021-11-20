@@ -57,7 +57,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
             itemBuilder: (context, index) {
               Plant tmp_p = _listPlant[index];
               return GestureDetector(
-                onTap: (){
+                onTap: () {
                   print("Card plant clicked");
                 },
                 child: Container(

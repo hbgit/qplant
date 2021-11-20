@@ -8,15 +8,13 @@ class Plant {
   bool fruit = false;
 
   //Constructor
-  Plant(
-    {
-      required this.id,
-      required this.vernacular_name,
-      required this.scientific_name,
-      required this.country,
-      required this.locality,
-      required this.flower,
-      required this.fruit,
-    }
-  );
+  Plant({
+    required this.id,
+    required this.vernacular_name,
+    required this.scientific_name,
+    required this.country,
+    required this.locality,
+    required this.flower,
+    required this.fruit,
+  });
 }

@@ -5,14 +5,14 @@ import 'package:qplant/view/AddNewUser.dart';
 import 'package:qplant/view/ForgotPassword.dart';
 import 'package:qplant/view/Home.dart';
 
-class Login extends StatefulWidget{
+class Login extends StatefulWidget {
   //Login({Key key}) : super(key: key);
 
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login>{
+class _LoginState extends State<Login> {
   GlobalKey<FormState> _key = new GlobalKey();
 
   bool _validate = false;
@@ -22,7 +22,7 @@ class _LoginState extends State<Login>{
   String? _validatePassWord(String? value) {
     if (value!.isEmpty) {
       return "Senha vazia.";
-    }else if(value == "123"){
+    } else if (value == "123") {
       return null;
     }
   }
@@ -40,14 +40,14 @@ class _LoginState extends State<Login>{
     }
   }
 
-  _showDialog(BuildContext context){
+  _showDialog(BuildContext context) {
     AlertDialog showDia = AlertDialog(
       title: Text("Sign In Error"),
       content: Text(_msgError),
       actions: [
         FlatButton(
           child: Text("OK"),
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
         )
@@ -56,10 +56,9 @@ class _LoginState extends State<Login>{
 
     showDialog(
         context: context,
-        builder: (context){
+        builder: (context) {
           return showDia;
-        }
-    );
+        });
   }
 
   // _signIn(User user){
@@ -94,7 +93,6 @@ class _LoginState extends State<Login>{
 
       //_signIn(user);
       Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
-
     } else {
       // validation error
       setState(() {
@@ -105,12 +103,10 @@ class _LoginState extends State<Login>{
 
   //Login Screen
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          color: Color(0xff075E54)
-        ),
+        decoration: BoxDecoration(color: Color(0xff075E54)),
         padding: EdgeInsets.all(10),
         child: Center(
           child: SingleChildScrollView(
@@ -124,89 +120,84 @@ class _LoginState extends State<Login>{
                         FontAwesomeIcons.envira,
                         color: Colors.white,
                         size: 90,
-                      )
-                  ),
+                      )),
                 ),
                 Center(
                   child: Text(
                     "Acessar com:",
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white
-                    ),
+                    style: TextStyle(fontSize: 25, color: Colors.white),
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        print("Facebook");
-                      },
-                      child: SizedBox(
-                        width: 100,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xff3b5998),
-                            borderRadius: BorderRadius.circular(11),
-                          ),
-                          child: Center(
-                            child: FaIcon(
-                              FontAwesomeIcons.facebook,
-                              color: Colors.white,
-                              size: 50,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          print("Facebook");
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xff3b5998),
+                              borderRadius: BorderRadius.circular(11),
+                            ),
+                            child: Center(
+                              child: FaIcon(
+                                FontAwesomeIcons.facebook,
+                                color: Colors.white,
+                                size: 50,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        print("Twitter");
-                      },
-                      child: SizedBox(
-                        width: 100,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xff1da1f2),
-                            borderRadius: BorderRadius.circular(11),
-                          ),
-                          child: Center(
-                            child: FaIcon(
-                              FontAwesomeIcons.twitter,
-                              color: Colors.white,
-                              size: 50,
+                      GestureDetector(
+                        onTap: () {
+                          print("Twitter");
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xff1da1f2),
+                              borderRadius: BorderRadius.circular(11),
+                            ),
+                            child: Center(
+                              child: FaIcon(
+                                FontAwesomeIcons.twitter,
+                                color: Colors.white,
+                                size: 50,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        print("Google");
-                      },
-                      child: SizedBox(
-                        width: 100,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xffdb4437),
-                            borderRadius: BorderRadius.circular(11),
-                          ),
-                          child: Center(
-                            child: FaIcon(
-                              FontAwesomeIcons.google,
-                              color: Colors.white,
-                              size: 50,
+                      GestureDetector(
+                        onTap: () {
+                          print("Google");
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xffdb4437),
+                              borderRadius: BorderRadius.circular(11),
+                            ),
+                            child: Center(
+                              child: FaIcon(
+                                FontAwesomeIcons.google,
+                                color: Colors.white,
+                                size: 50,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ]
-                ),
+                    ]),
                 SizedBox(
                   height: 35,
                 ),
@@ -214,10 +205,7 @@ class _LoginState extends State<Login>{
                   children: <Widget>[
                     Text(
                       "OU",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     Divider(
                       color: Colors.white,
@@ -232,29 +220,24 @@ class _LoginState extends State<Login>{
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: TextEditingController(
-                            text: "test@test.com"
-                          ),
+                          controller:
+                              TextEditingController(text: "test@test.com"),
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "E-mail",
                             filled: true,
                             fillColor: Colors.white,
-                            helperStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20
-                            ),
-                            errorStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15
-                            ),
+                            helperStyle:
+                                TextStyle(color: Colors.black, fontSize: 20),
+                            errorStyle:
+                                TextStyle(color: Colors.white, fontSize: 15),
                           ),
-                          validator: (value){
+                          validator: (value) {
                             return _validateEmail(value);
                           },
                           keyboardType: TextInputType.emailAddress,
-                          onSaved: (String? v){
+                          onSaved: (String? v) {
                             _email = v!;
                           },
                         ),
@@ -262,30 +245,24 @@ class _LoginState extends State<Login>{
                           height: 20,
                         ),
                         TextFormField(
-                          controller: TextEditingController(
-                              text: "1234"
-                          ),
+                          controller: TextEditingController(text: "1234"),
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Senha",
                             filled: true,
                             fillColor: Colors.white,
-                            helperStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20
-                            ),
-                            errorStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15
-                            ),
+                            helperStyle:
+                                TextStyle(color: Colors.black, fontSize: 20),
+                            errorStyle:
+                                TextStyle(color: Colors.white, fontSize: 15),
                           ),
                           obscureText: true,
-                          validator: (value){
+                          validator: (value) {
                             return _validatePassWord(value);
                           },
                           keyboardType: TextInputType.text,
-                          onSaved: (String? v){
+                          onSaved: (String? v) {
                             _password = v!;
                           },
                         ),
@@ -297,12 +274,12 @@ class _LoginState extends State<Login>{
                           height: 50,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                onPrimary: Colors.white,
-                                primary: Colors.red,
-                                textStyle: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              onPrimary: Colors.white,
+                              primary: Colors.red,
+                              textStyle: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             onPressed: () {
                               print("Enviar Login");
@@ -320,41 +297,42 @@ class _LoginState extends State<Login>{
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 //Navigator.pushNamed(context, "myRoute");
                                 print("Esqueceu a senha?");
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => ForgotPassword()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgotPassword()));
                               },
                               child: Text(
                                 "Esqueceu a senha?",
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.white
-                                ),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 print("Novo aqui? Cadastrar!");
                                 //Navigator.pushNamed(context, "myRoute");
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => AddNewUser()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddNewUser()));
                               },
                               child: Text(
                                 "Novo aqui? Cadastrar!",
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                     color: Colors.white,
-                                    decoration: TextDecoration.underline
-                                ),
+                                    decoration: TextDecoration.underline),
                               ),
                             )
                           ],
                         ),
                       ],
-                    )
-                ),
+                    )),
               ],
             ),
           ),

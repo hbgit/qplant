@@ -108,14 +108,15 @@ class _LoginState extends State<SetNewPassword> {
                                   )),
                               onPressed: () {
                                 print("Cancelando nova senha");
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => Login()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()));
                               },
                               child: new Text("CANCELAR"),
                             ),
                           ),
-                        ]
-                    ),
+                        ]),
                   ],
                 )),
               ],

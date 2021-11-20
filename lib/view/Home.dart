@@ -8,14 +8,7 @@ import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/MyCatalog.dart';
 
 // the seq is equal to the _getDrawerItem function
-enum HAM_MENU {
-  home,
-  id_planta,
-  my_catalog,
-  history,
-  about_app,
-  logout
-}
+enum HAM_MENU { home, id_planta, my_catalog, history, about_app, logout }
 
 class Home extends StatefulWidget {
   @override
@@ -34,9 +27,9 @@ class _HomeViewState extends State<Home> {
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
 
   _onSelectItem(int index) {
-    if(index == -1){
+    if (index == -1) {
       Navigator.of(context).pop();
-    }else{
+    } else {
       setState(() => _selectedIndex = index);
       Navigator.of(context).pop();
     }
@@ -50,11 +43,11 @@ class _HomeViewState extends State<Home> {
       case 1:
         print("Identificar Planta");
         return IdentPlant();
-        //break;
+      //break;
       case 2:
         print("Meu Catalago");
         return MyCatalog();
-        //break;
+      //break;
       case 3:
         print("Histórico");
         break;
@@ -69,8 +62,8 @@ class _HomeViewState extends State<Home> {
     }
   }
 
-  int _selectOpBtNav(int index){
-    switch(index){
+  int _selectOpBtNav(int index) {
+    switch (index) {
       case 2:
         return 0;
       case 3:
@@ -82,7 +75,6 @@ class _HomeViewState extends State<Home> {
     }
   }
 
-
   // Home Screen
   @override
   Widget build(BuildContext context) {
@@ -93,9 +85,7 @@ class _HomeViewState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-                _menuPath
-            ),
+            Text(_menuPath),
             Container(
               alignment: Alignment.centerLeft,
               child: FaIcon(
@@ -154,11 +144,9 @@ class _HomeViewState extends State<Home> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
-                        'Voltar',
+                    title: Text('Voltar',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                     //selected: 0 == _selectedIndex,
                     onTap: () {
                       print(HAM_MENU.home);
@@ -181,11 +169,9 @@ class _HomeViewState extends State<Home> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
-                        'Identificar Planta',
+                    title: Text('Identificar Planta',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                     //selected: 1 == _selectedIndex,
                     onTap: () {
                       setState(() {
@@ -208,11 +194,9 @@ class _HomeViewState extends State<Home> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
-                      'Meu Catálago',
+                    title: Text('Meu Catálago',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                     //selected: 1 == _selectedIndex,
                     onTap: () {
                       setState(() {
@@ -235,11 +219,9 @@ class _HomeViewState extends State<Home> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
-                        'Histórico',
+                    title: Text('Histórico',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                     selected: 2 == _selectedIndex,
                     onTap: () {
                       setState(() {
@@ -262,11 +244,9 @@ class _HomeViewState extends State<Home> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
-                        'Sobre o APP',
+                    title: Text('Sobre o APP',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                     selected: 3 == _selectedIndex,
                     onTap: () {
                       setState(() {
@@ -289,11 +269,9 @@ class _HomeViewState extends State<Home> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: Text(
-                        'Sair da Conta',
+                    title: Text('Sair da Conta',
                         textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.white, fontSize: 15)
-                    ),
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                     selected: 4 == _selectedIndex,
                     onTap: () {
                       setState(() {
@@ -311,21 +289,21 @@ class _HomeViewState extends State<Home> {
       body: _getDrawerItem(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectOpBtNav(_selectedIndex),
-        onTap: (index){
+        onTap: (index) {
           //
           print("BTNav $index");
           setState(() {
-            if(index == 0){
+            if (index == 0) {
               _selectedIndex = HAM_MENU.my_catalog.index;
               setState(() {
                 _menuPath = "Meu Catálago";
               });
-            }else if(index == 1){
+            } else if (index == 1) {
               _selectedIndex = HAM_MENU.history.index;
               setState(() {
                 _menuPath = "Meu Catálago";
               });
-            }else{
+            } else {
               _selectedIndex = HAM_MENU.id_planta.index;
               setState(() {
                 _menuPath = "Identificar Planta";
@@ -345,13 +323,13 @@ class _HomeViewState extends State<Home> {
             backgroundColor: Color(0xff0c7e47),
           ),
           BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.history,
-                color: Colors.white,
-                size: 30,
-              ),
-              label: "Histórico",
-              backgroundColor: Color(0xff20b2aa),
+            icon: FaIcon(
+              FontAwesomeIcons.history,
+              color: Colors.white,
+              size: 30,
+            ),
+            label: "Histórico",
+            backgroundColor: Color(0xff20b2aa),
           ),
           BottomNavigationBarItem(
             icon: FaIcon(

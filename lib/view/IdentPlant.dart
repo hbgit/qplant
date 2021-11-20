@@ -1,9 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:qplant/view/ClassifyResult.dart';
+import 'package:qplant/view/ConfirmImgClassify.dart';
 
 class IdentPlant extends StatefulWidget {
   @override
@@ -11,40 +9,19 @@ class IdentPlant extends StatefulWidget {
 }
 
 class _IdentPlantViewState extends State<IdentPlant> {
-  late XFile _image;
-  late String _urlRecoveryImage;
-
   int _flowScreen = 0;
+  int _indexScreenIdPlant = 0;
+  List<Widget> _screensIdentPlant = [
+    ConfirmImgClassify(),
+    ClassifyResult(),
+  ];
 
   @override
   void initState() {
     super.initState();
   }
 
-  Future _recoveryImage(String fromImage) async {
-    late XFile imageOp;
-    final ImagePicker _imgPicker = ImagePicker();
-
-    switch (fromImage) {
-      case "camera":
-        imageOp = (await _imgPicker.pickImage(source: ImageSource.camera))!;
-        break;
-      case "galeria":
-        print(">> Galeria");
-        imageOp = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
-        break;
-    }
-
-
-    print(imageOp.path);
-    setState(() {
-      _flowScreen = 1;
-      _image = imageOp;
-      print("Path image: ${_image.path}");
-    });
-  }
-
-  Widget _identPlantHome(){
+  Widget _identPlantHome() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -71,23 +48,20 @@ class _IdentPlantViewState extends State<IdentPlant> {
                               fontWeight: FontWeight.bold,
                               fontSize: 18),
                         ),
-                      )
-                  ),
+                      )),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.white,
                       width: 2,
                     ),
-                  )
-              )
-            ]
-        ),
+                  ))
+            ]),
         Card(
             color: Colors.white,
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 print("Upload");
-                _recoveryImage("galeria");
+                //_recoveryImage("galeria");
                 //Navigator.of(context).pop();
                 //Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImage()));
               },
@@ -99,7 +73,7 @@ class _IdentPlantViewState extends State<IdentPlant> {
                   children: [
                     FaIcon(
                       FontAwesomeIcons.fileUpload,
-                      color:Color(0xff0c7e47),
+                      color: Color(0xff0c7e47),
                       size: 50,
                     ),
                     Text(
@@ -113,14 +87,13 @@ class _IdentPlantViewState extends State<IdentPlant> {
                   ],
                 ),
               ),
-            )
-        ),
+            )),
         Card(
             color: Colors.white,
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 print("Take photo");
-                _recoveryImage("camera");
+                //_recoveryImage("camera");
               },
               child: Padding(
                 padding: EdgeInsets.all(11),
@@ -130,7 +103,7 @@ class _IdentPlantViewState extends State<IdentPlant> {
                   children: [
                     FaIcon(
                       FontAwesomeIcons.camera,
-                      color:Color(0xff0c7e47),
+                      color: Color(0xff0c7e47),
                       size: 50,
                     ),
                     Text(
@@ -144,73 +117,8 @@ class _IdentPlantViewState extends State<IdentPlant> {
                   ],
                 ),
               ),
-            )
-        )
+            ))
       ],
-    );
-  }
-
-  Widget _confirmeImage(){
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(11),
-              child: kIsWeb ?
-              Image.network(_image.path,
-                fit: BoxFit.fitHeight,
-              ) :
-              Image.file(File(_image.path),
-                fit: BoxFit.fitHeight,),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.white,
-                    primary: Colors.red,
-                    textStyle: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
-                    print("CANCELAR");
-                    setState(() {
-                      _flowScreen = 0;
-                    });
-                  },
-                  child: new Text("CANCELAR"),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    onPrimary: Colors.black,
-                    primary: Colors.white,
-                    textStyle: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: () {
-                    print("CLASSIFICAR");
-                    setState(() {
-                      _flowScreen = 0;
-                    });
-                  },
-                  child: new Text("CLASSIFICAR"),
-                ),
-              ],
-            ),
-          ],
-        ),
-      )
     );
   }
 
@@ -218,7 +126,9 @@ class _IdentPlantViewState extends State<IdentPlant> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(7),
-      child: _flowScreen == 0 ? _identPlantHome() : _confirmeImage(),
+      child: _flowScreen == 0
+          ? _identPlantHome()
+          : _screensIdentPlant[_indexScreenIdPlant],
     );
   }
 }

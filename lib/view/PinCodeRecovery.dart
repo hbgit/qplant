@@ -181,9 +181,12 @@ class _LoginState extends State<PinCodeRecovery> {
                                     setState(
                                       () {
                                         hasError = false;
-                                        if(currentText == "1234"){
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => SetNewPassword()));
+                                        if (currentText == "1234") {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SetNewPassword()));
                                         }
                                         //snackBar("OTP Verified!!");
                                       },
