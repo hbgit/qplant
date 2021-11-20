@@ -9,7 +9,9 @@ class StartApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          primaryColor: Color(0xff0f9d58), accentColor: Color(0xff0c7e47)),
+          primaryColor: Color(0xff0f9d58),
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Color(0xff0c7e47))),
       onGenerateRoute: (settings) {
         print("SETTINGS: ${settings.name}");
         return RouteGenerator.generatorRoute(settings);
