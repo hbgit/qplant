@@ -13,7 +13,6 @@ class StartApp extends StatelessWidget {
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Color(0xff0c7e47))),
       onGenerateRoute: (settings) {
-        print("SETTINGS: ${settings.name}");
         return RouteGenerator.generatorRoute(settings);
       },
     );

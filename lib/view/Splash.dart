@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/Login.dart';
-//import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class Splash extends StatefulWidget {
@@ -11,6 +11,7 @@ class Splash extends StatefulWidget {
 
 class _SplashViewState extends State<Splash> {
   //final Auth _auth = Auth();
+  LoggerDef callLog = LoggerDef();
   String _route = "/";
 
   Future<bool> _initialCheck() async {
@@ -36,10 +37,10 @@ class _SplashViewState extends State<Splash> {
         future: _initialCheck(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
-            print(_route);
             //return _route == "/home" ? HomeScreen() : Login();
             return _route == "/home" ? Center() : Login();
           } else {
+            callLog.logger.d("Showing splash screen");
             return Center(
               child: Stack(
                 children: [

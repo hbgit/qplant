@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/PinCodeRecovery.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -10,6 +11,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _LoginState extends State<ForgotPassword> {
+  LoggerDef callLog = LoggerDef();
+
   //bool _validate = false;
   late String _email;
   //, _password;
@@ -86,7 +89,7 @@ class _LoginState extends State<ForgotPassword> {
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (String? v) {
                         _email = v!;
-                        print(_email);
+                        callLog.logger.d("Email used as input: " + _email);
                       },
                     ),
                     SizedBox(
@@ -103,7 +106,7 @@ class _LoginState extends State<ForgotPassword> {
                               fontWeight: FontWeight.bold,
                             )),
                         onPressed: () {
-                          print("Recuperar senha.");
+                          callLog.logger.d("The recovery password was adopted");
                           Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 
 class ConfirmImgClassify extends StatefulWidget {
   //final String captureMethod;
@@ -13,6 +14,7 @@ class ConfirmImgClassify extends StatefulWidget {
 
 class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
   late XFile _image;
+  LoggerDef callLog = LoggerDef();
   //late String _urlRecoveryImage;
 
   // Future _recoveryImage(String fromImage) async {
@@ -72,7 +74,7 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
                   ),
                 ),
                 onPressed: () {
-                  print("CANCELAR");
+                  callLog.logger.d("Cancel option was clicked");
                 },
                 child: new Text("CANCELAR"),
               ),
@@ -86,7 +88,7 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
                   ),
                 ),
                 onPressed: () {
-                  print("CLASSIFICAR");
+                  callLog.logger.d("Classify option was adopted");
                   setState(() {
                     //_flowScreen = 0;
                     //ClassifyResult();

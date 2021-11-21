@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/AddNewUser.dart';
 import 'package:qplant/view/ForgotPassword.dart';
@@ -12,6 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  LoggerDef callLog = LoggerDef();
   GlobalKey<FormState> _key = new GlobalKey();
 
   bool _validate = false;
@@ -83,8 +85,9 @@ class _LoginState extends State<Login> {
       // No any error in validation
       _key.currentState!.save();
 
-      print("Email $_email");
-      print("Pass $_password");
+      callLog.logger.d("Login was approved");
+      callLog.logger.d("Login: " + _email);
+      callLog.logger.d("Password: " + _password);
 
       // User user = User();
       // user.email = _email;
@@ -96,7 +99,7 @@ class _LoginState extends State<Login> {
       // validation error
       setState(() {
         _validate = true;
-        print(_validate);
+        callLog.logger.d("Validation login status: " + _validate.toString());
       });
     }
   }
@@ -136,7 +139,7 @@ class _LoginState extends State<Login> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print("Facebook");
+                          callLog.logger.d("Facebook login was adoted");
                         },
                         child: SizedBox(
                           width: 100,
@@ -157,7 +160,7 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print("Twitter");
+                          callLog.logger.d("Twitter login was adoted");
                         },
                         child: SizedBox(
                           width: 100,
@@ -178,7 +181,7 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print("Google");
+                          callLog.logger.d("Google login was adopted");
                         },
                         child: SizedBox(
                           width: 100,
@@ -282,7 +285,7 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                             onPressed: () {
-                              print("Enviar Login");
+                              callLog.logger.d("Send login to validate");
                               _sendToServer();
                               // Navigator.push(context,
                               //     MaterialPageRoute(builder: (context) => Home()));
@@ -299,7 +302,7 @@ class _LoginState extends State<Login> {
                             GestureDetector(
                               onTap: () {
                                 //Navigator.pushNamed(context, "myRoute");
-                                print("Esqueceu a senha?");
+                                callLog.logger.d("Forgot password was adopted");
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -314,7 +317,7 @@ class _LoginState extends State<Login> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                print("Novo aqui? Cadastrar!");
+                                callLog.logger.d("Add new login was adopted");
                                 //Navigator.pushNamed(context, "myRoute");
                                 Navigator.push(
                                     context,

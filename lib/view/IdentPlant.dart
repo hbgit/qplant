@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/ClassifyResult.dart';
 import 'package:qplant/view/ConfirmImgClassify.dart';
 
@@ -9,6 +10,8 @@ class IdentPlant extends StatefulWidget {
 }
 
 class _IdentPlantViewState extends State<IdentPlant> {
+  LoggerDef callLog = LoggerDef();
+
   int _flowScreen = 0;
   int _indexScreenIdPlant = 0;
   List<Widget> _screensIdentPlant = [
@@ -60,7 +63,7 @@ class _IdentPlantViewState extends State<IdentPlant> {
             color: Colors.white,
             child: GestureDetector(
               onTap: () {
-                print("Upload");
+                callLog.logger.d("Upload picture was adopted");
                 //_recoveryImage("galeria");
                 //Navigator.of(context).pop();
                 //Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImage()));
@@ -92,7 +95,7 @@ class _IdentPlantViewState extends State<IdentPlant> {
             color: Colors.white,
             child: GestureDetector(
               onTap: () {
-                print("Take photo");
+                callLog.logger.d("Take a photo was adopted");
                 //_recoveryImage("camera");
               },
               child: Padding(

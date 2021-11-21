@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 
 class AddNewUser extends StatefulWidget {
   //Login({Key key}) : super(key: key);
@@ -9,6 +10,7 @@ class AddNewUser extends StatefulWidget {
 }
 
 class _LoginState extends State<AddNewUser> {
+  LoggerDef callLog = LoggerDef();
   //bool _validate = false;
   late String _email, _password;
   //String _msgError = "";
@@ -71,7 +73,7 @@ class _LoginState extends State<AddNewUser> {
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (String? v) {
                         _email = v!;
-                        print(_email);
+                        callLog.logger.d("The email used as input: " + _email);
                       },
                     ),
                     SizedBox(
@@ -91,7 +93,8 @@ class _LoginState extends State<AddNewUser> {
                       keyboardType: TextInputType.text,
                       onSaved: (String? v) {
                         _password = v!;
-                        print(_password);
+                        callLog.logger
+                            .d("The password used as input: " + _password);
                       },
                     ),
                     SizedBox(
@@ -108,7 +111,7 @@ class _LoginState extends State<AddNewUser> {
                               fontWeight: FontWeight.bold,
                             )),
                         onPressed: () {
-                          print("Enviar cadastro de novo user.");
+                          callLog.logger.d("The new user was send to the app");
                         },
                         child: new Text("CADASTRAR"),
                       ),

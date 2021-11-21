@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/model/Plant.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -11,6 +12,7 @@ class MyCatalog extends StatefulWidget {
 }
 
 class _MyCatalogViewState extends State<MyCatalog> {
+  LoggerDef callLog = LoggerDef();
   List<Plant> _listPlant = [];
 
   @override
@@ -58,7 +60,9 @@ class _MyCatalogViewState extends State<MyCatalog> {
               Plant tmpP = _listPlant[index];
               return GestureDetector(
                 onTap: () {
-                  print("Card plant clicked");
+                  callLog.logger.d("The card plant number: " +
+                      index.toString() +
+                      " was clicked");
                 },
                 child: Container(
                   padding: EdgeInsets.all(7),
@@ -105,7 +109,10 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          print("Favoritei");
+                                          callLog.logger.d(
+                                              "The card plant number: " +
+                                                  index.toString() +
+                                                  " was liked");
                                         },
                                         child: FaIcon(
                                           FontAwesomeIcons.trash,
@@ -135,7 +142,11 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                           color: Color(0xffdb4437),
                                         ),
                                         onRatingUpdate: (rating) {
-                                          print(rating);
+                                          callLog.logger.d(
+                                              "The card plant number: " +
+                                                  index.toString() +
+                                                  " was rating to: " +
+                                                  rating.toString());
                                         },
                                       ),
                                       SizedBox(
@@ -158,9 +169,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                             fontSize: 21),
                                       ),
                                       GestureDetector(
-                                        onTap: () {
-                                          print("Favoritei");
-                                        },
+                                        onTap: () {},
                                         child: FaIcon(
                                           FontAwesomeIcons.arrowCircleRight,
                                           color: Colors.grey,

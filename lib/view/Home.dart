@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/MyCatalog.dart';
-import 'package:logger/logger.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 
 // the seq is equal to the _getDrawerItem function
 enum HAM_MENU { home, id_planta, my_catalog, history, about_app, logout }
@@ -15,6 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeViewState extends State<Home> {
+  LoggerDef callLog = LoggerDef();
   //final Auth _auth = Auth();
   // Menu var
   int _selectedIndex = HAM_MENU.my_catalog.index;
@@ -25,17 +26,7 @@ class _HomeViewState extends State<Home> {
   String _formattedDate =
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
 
-  final logger = new Logger(
-    printer: PrettyPrinter(
-        methodCount: 1,
-        lineLength: 50,
-        errorMethodCount: 3,
-        colors: true,
-        printEmojis: true),
-  );
-
   _onSelectItem(int index) {
-    logger.d("Debug Log");
     if (index == -1) {
       Navigator.of(context).pop();
     } else {
@@ -47,25 +38,24 @@ class _HomeViewState extends State<Home> {
   _getDrawerItem(int pos) {
     switch (pos) {
       case 0:
-        logger.d("Debug Log");
-        print("Home");
+        callLog.logger.d("Draw home screen");
         break;
       case 1:
-        print("Identificar Planta");
+        callLog.logger.d("Draw identify plant screen");
         return IdentPlant();
       //break;
       case 2:
-        print("Meu Catalago");
+        callLog.logger.d("Draw my plants catalog screen");
         return MyCatalog();
       //break;
       case 3:
-        print("Histórico");
+        callLog.logger.d("Draw history screen");
         break;
       case 4:
-        print("Sobre o APP");
+        callLog.logger.d("Draw about app screen");
         break;
       case 5:
-        print("Sair da Conta");
+        callLog.logger.d("Draw logout screen");
         break;
       default:
         break;
@@ -159,7 +149,6 @@ class _HomeViewState extends State<Home> {
                         style: TextStyle(color: Colors.white, fontSize: 15)),
                     //selected: 0 == _selectedIndex,
                     onTap: () {
-                      print(HAM_MENU.home);
                       _onSelectItem(-1);
                       // Navigator.of(context).pop();
                       // Navigator.push(context, MaterialPageRoute(builder: (context) => MyCatalog()));
@@ -300,8 +289,6 @@ class _HomeViewState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectOpBtNav(_selectedIndex),
         onTap: (index) {
-          //
-          print("BTNav $index");
           setState(() {
             if (index == 0) {
               _selectedIndex = HAM_MENU.my_catalog.index;

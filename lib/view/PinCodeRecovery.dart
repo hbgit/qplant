@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/SetNewPassword.dart';
 
 class PinCodeRecovery extends StatefulWidget {
@@ -13,6 +14,7 @@ class PinCodeRecovery extends StatefulWidget {
 }
 
 class _LoginState extends State<PinCodeRecovery> {
+  LoggerDef callLog = LoggerDef();
   //bool _validate = false;
   late String _email;
   //, _password;
@@ -137,16 +139,16 @@ class _LoginState extends State<PinCodeRecovery> {
                                 )
                               ],
                               onCompleted: (v) {
-                                print("Completed");
+                                callLog.logger.d("Pin code was completed");
                               },
                               onChanged: (value) {
-                                //print(value);
                                 setState(() {
                                   currentText = value;
                                 });
                               },
                               beforeTextPaste: (text) {
-                                print("Allowing to paste $text");
+                                callLog.logger
+                                    .d("The pin code was paste in the form");
                                 //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                                 //but you can show anything you want here, like your pop up saying wrong paste format or etc
                                 return true;
@@ -170,10 +172,7 @@ class _LoginState extends State<PinCodeRecovery> {
                                       fontWeight: FontWeight.bold,
                                     )),
                                 onPressed: () {
-                                  print("Recuperar senha.");
                                   //formKey.currentState!.validate();
-                                  print("Código: $currentText");
-                                  print(currentText.length);
                                   if (currentText.length < 4 ||
                                       currentText.isEmpty) {
                                     errorController.add(ErrorAnimationType
@@ -210,7 +209,8 @@ class _LoginState extends State<PinCodeRecovery> {
                                       fontWeight: FontWeight.bold,
                                     )),
                                 onPressed: () {
-                                  print("Clean");
+                                  callLog.logger.d(
+                                      "The button to clean pin code was pressed");
                                   textEditingController.clear();
                                 },
                                 child: new Text("LIMPAR"),

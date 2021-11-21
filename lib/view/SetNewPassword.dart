@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/Login.dart';
 
 class SetNewPassword extends StatefulWidget {
@@ -10,6 +11,7 @@ class SetNewPassword extends StatefulWidget {
 }
 
 class _LoginState extends State<SetNewPassword> {
+  LoggerDef callLog = LoggerDef();
   //bool _validate = false;
   late String _password;
   //String _msgError = "";
@@ -55,7 +57,7 @@ class _LoginState extends State<SetNewPassword> {
                       keyboardType: TextInputType.text,
                       onSaved: (String? v) {
                         _password = v!;
-                        print(_password);
+                        callLog.logger.d("Setting up password: " + _password);
                       },
                     ),
                     SizedBox(
@@ -93,7 +95,7 @@ class _LoginState extends State<SetNewPassword> {
                                     fontWeight: FontWeight.bold,
                                   )),
                               onPressed: () {
-                                print("Enviando nova senha");
+                                callLog.logger.d("Send new password");
                               },
                               child: new Text("ENVIAR"),
                             ),
@@ -108,7 +110,8 @@ class _LoginState extends State<SetNewPassword> {
                                     fontWeight: FontWeight.bold,
                                   )),
                               onPressed: () {
-                                print("Cancelando nova senha");
+                                callLog.logger
+                                    .d("Cancel process to set new password");
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
