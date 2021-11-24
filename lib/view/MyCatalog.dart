@@ -80,7 +80,7 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
                                   child: Image.network(
-                                    "https://i.pinimg.com/564x/bd/83/5b/bd835b34923609442d47877c84cd4854.jpg",
+                                    "https://hmjardins.com.br/tok/wp-content/uploads/2015/06/Goiabeira.jpg",
                                     height: 140,
                                   ),
                                 ),

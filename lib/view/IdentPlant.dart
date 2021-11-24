@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qplant/controller/LoggerDef.dart';
-import 'package:qplant/view/ClassifyResult.dart';
 import 'package:qplant/view/ConfirmImgClassify.dart';
 
 class IdentPlant extends StatefulWidget {
@@ -12,12 +11,8 @@ class IdentPlant extends StatefulWidget {
 class _IdentPlantViewState extends State<IdentPlant> {
   LoggerDef callLog = LoggerDef();
 
-  int _flowScreen = 0;
-  int _indexScreenIdPlant = 0;
-  List<Widget> _screensIdentPlant = [
-    ConfirmImgClassify(),
-    ClassifyResult(),
-  ];
+  bool _flowScreen = false;
+  String _sourceImg = "galery";
 
   @override
   void initState() {
@@ -64,7 +59,11 @@ class _IdentPlantViewState extends State<IdentPlant> {
             child: GestureDetector(
               onTap: () {
                 callLog.logger.d("Upload picture was adopted");
-                //_recoveryImage("galeria");
+                setState(() {
+                  _flowScreen = true;
+                  _sourceImg = "galery";
+                });
+
                 //Navigator.of(context).pop();
                 //Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImage()));
               },
@@ -96,7 +95,10 @@ class _IdentPlantViewState extends State<IdentPlant> {
             child: GestureDetector(
               onTap: () {
                 callLog.logger.d("Take a photo was adopted");
-                //_recoveryImage("camera");
+                setState(() {
+                  _flowScreen = true;
+                  _sourceImg = "camera";
+                });
               },
               child: Padding(
                 padding: EdgeInsets.all(11),
@@ -129,9 +131,9 @@ class _IdentPlantViewState extends State<IdentPlant> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(7),
-      child: _flowScreen == 0
+      child: _flowScreen == false
           ? _identPlantHome()
-          : _screensIdentPlant[_indexScreenIdPlant],
+          : ConfirmImgClassify(captureMethod: _sourceImg),
     );
   }
 }

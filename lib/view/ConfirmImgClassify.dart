@@ -3,43 +3,61 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:qplant/controller/LoggerDef.dart';
+import 'package:qplant/view/ClassifyResult.dart';
+import 'package:qplant/view/IdentPlant.dart';
 
 class ConfirmImgClassify extends StatefulWidget {
-  //final String captureMethod;
-  //ConfirmImgClassify({required this.captureMethod});
+  final String captureMethod;
+  ConfirmImgClassify({required this.captureMethod});
 
   @override
   _ConfirmImgClassifyViewState createState() => _ConfirmImgClassifyViewState();
 }
 
 class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
+  bool _backScreen = false;
+  bool _classifyPlant = false;
   late XFile _image;
   LoggerDef callLog = LoggerDef();
   //late String _urlRecoveryImage;
 
-  // Future _recoveryImage(String fromImage) async {
-  //   late XFile imageOp;
-  //   final ImagePicker _imgPicker = ImagePicker();
-  //
-  //   switch (fromImage) {
-  //     case "camera":
-  //       imageOp = (await _imgPicker.pickImage(source: ImageSource.camera))!;
-  //       break;
-  //     case "galeria":
-  //       print(">> Galeria");
-  //       imageOp = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
-  //       break;
-  //   }
-  //
-  //   print(imageOp.path);
-  //   setState(() {
-  //     _image = imageOp;
-  //     print("Path image: ${_image.path}");
-  //   });
-  // }
+  Future<bool?> _recoveryImage() async {
+    //late XFile imageOp;
+    final ImagePicker _imgPicker = ImagePicker();
 
-  @override
-  Widget build(BuildContext context) {
+    callLog.logger.d("Capture method: " + widget.captureMethod);
+
+    switch (widget.captureMethod) {
+      case "camera":
+        _image = (await _imgPicker.pickImage(source: ImageSource.camera))!;
+        return true;
+      case "galery":
+        _image = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
+        return true;
+    }
+  }
+
+  _getImg2Classify() {
+    return Container(
+      child: FutureBuilder(
+        future: _recoveryImage(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            callLog.logger.d("Path image: ${snapshot.data} :: " + _image.path);
+            return _confirmImg();
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  _confirmImg() {
     return Container(
         child: Padding(
       padding: EdgeInsets.all(15),
@@ -50,11 +68,13 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
             child: kIsWeb
                 ? Image.network(
                     _image.path,
-                    fit: BoxFit.fitHeight,
+                    height: 300,
+                    scale: 0.5,
                   )
                 : Image.file(
                     File(_image.path),
-                    fit: BoxFit.fitHeight,
+                    height: 300,
+                    scale: 0.5,
                   ),
           ),
           SizedBox(
@@ -75,6 +95,9 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
                 ),
                 onPressed: () {
                   callLog.logger.d("Cancel option was clicked");
+                  setState(() {
+                    _backScreen = true;
+                  });
                 },
                 child: new Text("CANCELAR"),
               ),
@@ -90,8 +113,8 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
                 onPressed: () {
                   callLog.logger.d("Classify option was adopted");
                   setState(() {
-                    //_flowScreen = 0;
-                    //ClassifyResult();
+                    _backScreen = true;
+                    _classifyPlant = true;
                   });
                 },
                 child: new Text("CLASSIFICAR"),
@@ -102,4 +125,18 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
       ),
     ));
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: _backScreen == false
+            ? _getImg2Classify()
+            : _classifyPlant == false
+                ? IdentPlant()
+                : ClassifyResult());
+  }
 }
+
+// _imgCaptured == false
+// ?
+//     : _confirmImg()
