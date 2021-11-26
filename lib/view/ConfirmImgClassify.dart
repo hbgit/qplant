@@ -27,6 +27,8 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
 
     callLog.logger.d("Capture method: " + widget.captureMethod);
 
+    // in case of web adopt https://pub.dev/packages/image_picker_web
+
     switch (widget.captureMethod) {
       case "camera":
         _image = (await _imgPicker.pickImage(source: ImageSource.camera))!;
@@ -44,6 +46,7 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             callLog.logger.d("Path image: ${snapshot.data} :: " + _image.path);
+
             return _confirmImg();
           } else {
             return Center(
@@ -133,7 +136,9 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
             ? _getImg2Classify()
             : _classifyPlant == false
                 ? IdentPlant()
-                : ClassifyResult());
+                : ClassifyResult(
+                    imgInput: _image.path.toString(),
+                  ));
   }
 }
 
