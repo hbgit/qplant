@@ -1,13 +1,19 @@
 import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+//import 'package:image_picker_web/image_picker_web.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/ClassifyResult.dart';
 import 'package:qplant/view/IdentPlant.dart';
 
 class ConfirmImgClassify extends StatefulWidget {
   final String captureMethod;
+
   ConfirmImgClassify({required this.captureMethod});
 
   @override
@@ -17,24 +23,43 @@ class ConfirmImgClassify extends StatefulWidget {
 class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
   bool _backScreen = false;
   bool _classifyPlant = false;
-  late XFile _image;
+  XFile? _image;
+  Uint8List? _imageBytesNotCamera;
   LoggerDef callLog = LoggerDef();
+
   //late String _urlRecoveryImage;
 
   Future<bool?> _recoveryImage() async {
-    //late XFile imageOp;
     final ImagePicker _imgPicker = ImagePicker();
-
     callLog.logger.d("Capture method: " + widget.captureMethod);
-
-    // in case of web adopt https://pub.dev/packages/image_picker_web
 
     switch (widget.captureMethod) {
       case "camera":
-        _image = (await _imgPicker.pickImage(source: ImageSource.camera))!;
+        if (!kIsWeb) {
+          // Camera Mobile
+          _image = (await _imgPicker.pickImage(source: ImageSource.camera))!;
+        }
+
         return true;
       case "galery":
-        _image = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
+        if (kIsWeb) {
+          callLog.logger.d("Is a web platform");
+          FilePickerResult? result = await FilePicker.platform.pickFiles(
+            type: FileType.custom,
+            allowMultiple: false,
+            allowedExtensions: ['jpg', 'jpeg', 'png'],
+          );
+
+          if (result != null) {
+            _imageBytesNotCamera = result.files.first.bytes;
+            String fileName = result.files.first.name;
+            // Upload file
+            //await FirebaseStorage.instance.ref('uploads/$fileName').putData(fileBytes);
+          }
+        } else {
+          _image = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
+        }
+
         return true;
     }
   }
@@ -44,8 +69,9 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
       child: FutureBuilder(
         future: _recoveryImage(),
         builder: (context, snapshot) {
+          print(snapshot.hasData);
           if (snapshot.hasData) {
-            callLog.logger.d("Path image: ${snapshot.data} :: " + _image.path);
+            callLog.logger.d("Path image: ${snapshot.data}");
 
             return _confirmImg();
           } else {
@@ -69,13 +95,13 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
           ClipRRect(
             borderRadius: BorderRadius.circular(11),
             child: kIsWeb
-                ? Image.network(
-                    _image.path,
-                    height: 300,
+                ? Image.memory(
+                    _imageBytesNotCamera!,
+                    height: 150,
                     scale: 0.5,
                   )
                 : Image.file(
-                    File(_image.path),
+                    File(_image!.path),
                     height: 300,
                     scale: 0.5,
                   ),
@@ -137,7 +163,8 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
             : _classifyPlant == false
                 ? IdentPlant()
                 : ClassifyResult(
-                    imgInput: _image.path.toString(),
+                    image: _image!,
+                    imageBytesNotCamera: _imageBytesNotCamera!,
                   ));
   }
 }

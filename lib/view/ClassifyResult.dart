@@ -1,10 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
+
 class ClassifyResult extends StatefulWidget {
-  final String imgInput;
-  ClassifyResult({required this.imgInput});
+  final XFile image;
+  final Uint8List imageBytesNotCamera;
+
+  ClassifyResult(
+      {required this.image,
+      required this.imageBytesNotCamera});
 
   @override
   _ClassifyResultViewState createState() => _ClassifyResultViewState();
@@ -28,13 +36,13 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: kIsWeb
-                              ? Image.network(
-                                  widget.imgInput,
+                              ? Image.memory(
+                                  widget.imageBytesNotCamera,
                                   height: 200,
                                   width: 200,
                                 )
                               : Image.file(
-                                  File(widget.imgInput),
+                                  File(widget.image.path),
                                   height: 140,
                                   width: 140,
                                 ),
