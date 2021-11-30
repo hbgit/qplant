@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -94,41 +92,40 @@ class _IdentPlantViewState extends State<IdentPlant> {
               ),
             )),
         kIsWeb
-                ? Container()
-    : Card(
-            color: Colors.white,
-            child: GestureDetector(
-              onTap: () {
-                callLog.logger.d("Take a photo was adopted");
-                setState(() {
-                  _flowScreen = true;
-                  _sourceImg = "camera";
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.all(11),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FaIcon(
-                      FontAwesomeIcons.camera,
-                      color: Color(0xff0c7e47),
-                      size: 50,
-                    ),
-                    Text(
-                      "Tirar uma foto",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
+            ? Container()
+            : Card(
+                color: Colors.white,
+                child: GestureDetector(
+                  onTap: () {
+                    callLog.logger.d("Take a photo was adopted");
+                    setState(() {
+                      _flowScreen = true;
+                      _sourceImg = "camera";
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(11),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.camera,
                           color: Color(0xff0c7e47),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                          size: 50,
+                        ),
+                        Text(
+                          "Tirar uma foto",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Color(0xff0c7e47),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            )
-                )
+                  ),
+                ))
       ],
     );
   }

@@ -1,18 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-
-import 'package:image_picker/image_picker.dart';
 
 class ClassifyResult extends StatefulWidget {
-  final XFile image;
-  final Uint8List imageBytesNotCamera;
+  final Uint8List imageInBytes;
 
-  ClassifyResult(
-      {required this.image,
-      required this.imageBytesNotCamera});
+  ClassifyResult({required this.imageInBytes});
 
   @override
   _ClassifyResultViewState createState() => _ClassifyResultViewState();
@@ -34,19 +27,12 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
                     children: [
                       Container(
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: kIsWeb
-                              ? Image.memory(
-                                  widget.imageBytesNotCamera,
-                                  height: 200,
-                                  width: 200,
-                                )
-                              : Image.file(
-                                  File(widget.image.path),
-                                  height: 140,
-                                  width: 140,
-                                ),
-                        ),
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.memory(
+                              widget.imageInBytes,
+                              height: 200,
+                              width: 200,
+                            )),
                       ),
                     ],
                   ),

@@ -23,8 +23,8 @@ class ConfirmImgClassify extends StatefulWidget {
 class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
   bool _backScreen = false;
   bool _classifyPlant = false;
-  XFile? _image;
-  Uint8List? _imageBytesNotCamera;
+  //XFile? _image;
+  Uint8List? _imageInBytes;
   LoggerDef callLog = LoggerDef();
 
   //late String _urlRecoveryImage;
@@ -37,7 +37,10 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
       case "camera":
         if (!kIsWeb) {
           // Camera Mobile
-          _image = (await _imgPicker.pickImage(source: ImageSource.camera))!;
+          XFile _image =
+              (await _imgPicker.pickImage(source: ImageSource.camera))!;
+          var bytes = await new File(_image.path).readAsBytes();
+          _imageInBytes = bytes;
         }
 
         return true;
@@ -51,13 +54,16 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
           );
 
           if (result != null) {
-            _imageBytesNotCamera = result.files.first.bytes;
-            String fileName = result.files.first.name;
+            _imageInBytes = result.files.first.bytes;
+            // String fileName = result.files.first.name;
             // Upload file
             //await FirebaseStorage.instance.ref('uploads/$fileName').putData(fileBytes);
           }
         } else {
-          _image = (await _imgPicker.pickImage(source: ImageSource.gallery))!;
+          XFile _image =
+              (await _imgPicker.pickImage(source: ImageSource.gallery))!;
+          var bytes = await new File(_image.path).readAsBytes();
+          _imageInBytes = bytes;
         }
 
         return true;
@@ -72,7 +78,6 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
           print(snapshot.hasData);
           if (snapshot.hasData) {
             callLog.logger.d("Path image: ${snapshot.data}");
-
             return _confirmImg();
           } else {
             return Center(
@@ -93,19 +98,12 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(11),
-            child: kIsWeb
-                ? Image.memory(
-                    _imageBytesNotCamera!,
-                    height: 150,
-                    scale: 0.5,
-                  )
-                : Image.file(
-                    File(_image!.path),
-                    height: 300,
-                    scale: 0.5,
-                  ),
-          ),
+              borderRadius: BorderRadius.circular(11),
+              child: Image.memory(
+                _imageInBytes!,
+                height: 150,
+                scale: 0.5,
+              )),
           SizedBox(
             height: 25,
           ),
@@ -163,8 +161,7 @@ class _ConfirmImgClassifyViewState extends State<ConfirmImgClassify> {
             : _classifyPlant == false
                 ? IdentPlant()
                 : ClassifyResult(
-                    image: _image!,
-                    imageBytesNotCamera: _imageBytesNotCamera!,
+                    imageInBytes: _imageInBytes!,
                   ));
   }
 }
