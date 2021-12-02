@@ -39,6 +39,7 @@ dependencies:
   logger: ^1.0.0
   responsive_framework: ^0.1.5
   step_progress_indicator: ^1.0.1
+  google_maps_flutter: ^2.0.3
 
 
 dev_dependencies:
