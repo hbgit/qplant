@@ -38,6 +38,7 @@ dependencies:
   mime_type: ^1.0.0
   logger: ^1.0.0
   responsive_framework: ^0.1.5
+  step_progress_indicator: ^1.0.1
 
 
 dev_dependencies:
