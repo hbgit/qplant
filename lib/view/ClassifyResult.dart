@@ -21,7 +21,7 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
   int _likeNumber = 10;
   final ScrollController _firstController = ScrollController();
 
-  Completer<GoogleMapController> _controller = Completer();
+  var _controller = Completer();
 
   final Set<Marker> _markers = {};
 
@@ -279,8 +279,7 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
                                   mapType: MapType.normal,
                                   markers: _markers,
                                   initialCameraPosition: _kGooglePlex,
-                                  onMapCreated:
-                                      (GoogleMapController controller) {
+                                  onMapCreated: (controller) {
                                     _controller.complete(controller);
                                   },
                                 ),
