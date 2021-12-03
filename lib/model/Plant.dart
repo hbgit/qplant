@@ -1,9 +1,11 @@
+import 'package:qplant/model/LocationPlant.dart';
+
 class Plant {
   late String id;
   late String vernacularName;
   late String scientificName;
   late String country;
-  late List<String> locality;
+  LocationPlant location;
   bool flower = false;
   bool fruit = false;
 
@@ -13,7 +15,7 @@ class Plant {
     required this.vernacularName,
     required this.scientificName,
     required this.country,
-    required this.locality,
+    required this.location,
     required this.flower,
     required this.fruit,
   });
