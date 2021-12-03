@@ -15,10 +15,12 @@ class MyCatalog extends StatefulWidget {
 class _MyCatalogViewState extends State<MyCatalog> {
   LoggerDef callLog = LoggerDef();
   List<Plant> _listPlant = [];
+  List<Plant> _listFoundPlantResult = [];
 
   @override
   void initState() {
     _genDemoPlantData();
+    _listFoundPlantResult = _listPlant;
     super.initState();
   }
 
@@ -89,158 +91,149 @@ class _MyCatalogViewState extends State<MyCatalog> {
     _listPlant.add(p4);
   }
 
+  // This function is called whenever the text field changes
+  void _runFilter(String enteredKeyword) {
+    List<Plant> _listPlantResult = [];
+    if (enteredKeyword.isEmpty) {
+      _listPlantResult = _listPlant;
+    } else {
+      _listPlantResult = _listPlant
+          .where((element) => element.vernacularName
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      //_foundUsers = results;
+      _listFoundPlantResult = _listPlantResult;
+    });
+  }
+
   // Home Screen
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Plant>>(
-        //future: _listPlant,
-        builder: (context, snapshot) {
-      // TODO: adding ConnectionState
-      if (_listPlant.isNotEmpty) {
-        return ListView.separated(
-            itemBuilder: (context, index) {
-              Plant tmpP = _listPlant[index];
-              return GestureDetector(
-                onTap: () {
-                  callLog.logger.d("The card plant number: " +
-                      index.toString() +
-                      " was clicked");
-                },
-                child: Container(
-                  padding: EdgeInsets.all(7),
-                  height: 181,
-                  child: Card(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                child: ClipRRect(
+    //print(_listPlant);
+    return Padding(
+      padding: EdgeInsets.all(7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TextField(
+            decoration: const InputDecoration(
+              labelText: 'Search',
+              border: InputBorder.none,
+              filled: true,
+              suffixIcon: Icon(Icons.search),
+              fillColor: Colors.white,
+              helperStyle: TextStyle(color: Colors.black, fontSize: 20),
+            ),
+            onChanged: (value) => _runFilter(value),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: _listPlant.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _listFoundPlantResult.length,
+                    itemBuilder: (context, index) => Card(
+                      key: ValueKey(index),
+                      color: Colors.white,
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: Padding(
+                        padding: EdgeInsets.all(7),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
                                   child: Image.network(
                                     "https://hmjardins.com.br/tok/wp-content/uploads/2015/06/Goiabeira.jpg",
                                     height: 140,
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Expanded(
-                                  child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                //crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        tmpP.vernacularName,
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 21),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          callLog.logger.d(
-                                              "The card plant number: " +
-                                                  index.toString() +
-                                                  " was liked");
-                                        },
-                                        child: FaIcon(
-                                          FontAwesomeIcons.trash,
-                                          color: Color(0xffdb4437),
-                                          size: 30,
-                                        ),
-                                      ),
-                                    ],
+                              ],
+                            ),
+                            Column(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  _listFoundPlantResult[index].vernacularName,
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 21),
+                                ),
+                                Text(
+                                  _listFoundPlantResult[index].scientificName,
+                                  style: TextStyle(
+                                      color: Colors.blueGrey,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                RatingBar.builder(
+                                  initialRating: 3,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  itemCount: 5,
+                                  itemSize: 30,
+                                  itemPadding:
+                                      EdgeInsets.symmetric(horizontal: 4.0),
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Color(0xffdb4437),
                                   ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      RatingBar.builder(
-                                        initialRating: 3,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        itemCount: 5,
-                                        itemSize: 30,
-                                        itemPadding: EdgeInsets.symmetric(
-                                            horizontal: 4.0),
-                                        itemBuilder: (context, _) => Icon(
-                                          Icons.star,
-                                          color: Color(0xffdb4437),
-                                        ),
-                                        onRatingUpdate: (rating) {
-                                          callLog.logger.d(
-                                              "The card plant number: " +
-                                                  index.toString() +
-                                                  " was rating to: " +
-                                                  rating.toString());
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 21,
-                                      ),
-                                    ],
+                                  onRatingUpdate: (rating) {
+                                    callLog.logger.d("The card plant number: " +
+                                        index.toString() +
+                                        " was rating to: " +
+                                        rating.toString());
+                                  },
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  child: FaIcon(
+                                    FontAwesomeIcons.trash,
+                                    color: Color(0xffdb4437),
+                                    size: 30,
                                   ),
-                                  SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        tmpP.vernacularName,
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 21),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {},
-                                        child: FaIcon(
-                                          FontAwesomeIcons.arrowCircleRight,
-                                          color: Colors.grey,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ))
-                            ],
-                          ),
+                                ),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: FaIcon(
+                                    FontAwesomeIcons.arrowCircleRight,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => Divider(
-                  height: 2,
-                  color: Colors.grey,
-                ),
-            itemCount: _listPlant.length);
-      } else {
-        return Container(
-          child: Text("Seu Catálago está vazio :("),
-        );
-      }
-    });
+                  )
+                : Text("Seu Catálago está vazio :("),
+          ),
+        ],
+      ),
+    );
   }
 }
