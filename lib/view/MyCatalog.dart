@@ -122,11 +122,17 @@ class _MyCatalogViewState extends State<MyCatalog> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextField(
+            keyboardType: TextInputType.text,
+            cursorColor: Colors.green,
             decoration: const InputDecoration(
               labelText: 'Search',
+              labelStyle: TextStyle(color: Colors.black),
               border: InputBorder.none,
               filled: true,
-              suffixIcon: Icon(Icons.search),
+              suffixIcon: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
               fillColor: Colors.white,
               helperStyle: TextStyle(color: Colors.black, fontSize: 20),
             ),
