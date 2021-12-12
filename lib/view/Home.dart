@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -81,6 +80,7 @@ class _HomeViewState extends State<Home> {
     return Scaffold(
       backgroundColor: Color(0xff075E54),
       appBar: AppBar(
+        backgroundColor: Color(0xff075E54),
         centerTitle: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,8 +98,9 @@ class _HomeViewState extends State<Home> {
         ),
       ),
       drawer: Drawer(
+        backgroundColor: Color(0xff0c7e47),
         child: ListView(
-          padding: EdgeInsets.zero,
+          //padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               child: Column(
@@ -140,7 +141,7 @@ class _HomeViewState extends State<Home> {
                   color: Color(0xff0c7e47),
                   child: ListTile(
                     leading: FaIcon(
-                      FontAwesomeIcons.exchangeAlt,
+                      FontAwesomeIcons.backspace,
                       color: Colors.white,
                       size: 30,
                     ),
@@ -155,11 +156,6 @@ class _HomeViewState extends State<Home> {
                     },
                   ),
                 ),
-              ],
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: [
                 Ink(
                   color: Color(0xff0c7e47),
                   child: ListTile(
@@ -180,11 +176,6 @@ class _HomeViewState extends State<Home> {
                     },
                   ),
                 ),
-              ],
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: [
                 Ink(
                   color: Color(0xff0c7e47),
                   child: ListTile(
@@ -205,11 +196,6 @@ class _HomeViewState extends State<Home> {
                     },
                   ),
                 ),
-              ],
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: [
                 Ink(
                   color: Color(0xff0c7e47),
                   child: ListTile(
@@ -230,11 +216,6 @@ class _HomeViewState extends State<Home> {
                     },
                   ),
                 ),
-              ],
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: [
                 Ink(
                   color: Color(0xff0c7e47),
                   child: ListTile(
@@ -255,11 +236,6 @@ class _HomeViewState extends State<Home> {
                     },
                   ),
                 ),
-              ],
-            ),
-            ListView(
-              shrinkWrap: true,
-              children: [
                 Ink(
                   color: Color(0xff0c7e47),
                   child: ListTile(

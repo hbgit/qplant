@@ -5,6 +5,7 @@ import 'package:qplant/model/LocationPlant.dart';
 import 'package:qplant/view/Home.dart';
 
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class FixeDataResult extends StatefulWidget {
   @override
@@ -224,8 +225,27 @@ class _FixeDataResultViewState extends State<FixeDataResult> {
                             )),
                         onPressed: () {
                           callLog.logger.d("New plant data was save to review");
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Home()));
+                          AwesomeDialog(
+                            context: context,
+                            animType: AnimType.LEFTSLIDE,
+                            headerAnimationLoop: false,
+                            dialogType: DialogType.SUCCES,
+                            showCloseIcon: false,
+                            title: 'Sucesso',
+                            desc:
+                                'Obrigado pela suas correções, os dados serão analisados e em breve disponiveis no QPlant',
+                            btnOkOnPress: () {
+                              debugPrint('OnClcik');
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Home()));
+                            },
+                            btnOkIcon: Icons.check_circle,
+                            // onDissmissCallback: (type) {
+                            //   debugPrint('Dialog Dissmiss from callback $type');
+                            // }
+                          )..show();
                         },
                         child: new Text("ENVIAR"),
                       ),
