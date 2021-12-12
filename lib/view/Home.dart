@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:qplant/view/AboutApp.dart';
 import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/MyCatalog.dart';
 import 'package:qplant/controller/LoggerDef.dart';
@@ -52,7 +53,7 @@ class _HomeViewState extends State<Home> {
         break;
       case 4:
         callLog.logger.d("Draw about app screen");
-        break;
+        return AboutApp();
       case 5:
         callLog.logger.d("Draw logout screen");
         break;
@@ -274,7 +275,7 @@ class _HomeViewState extends State<Home> {
             } else if (index == 1) {
               _selectedIndex = HAM_MENU.history.index;
               setState(() {
-                _menuPath = "Meu Catálago";
+                _menuPath = "Meu Histórico";
               });
             } else {
               _selectedIndex = HAM_MENU.id_planta.index;

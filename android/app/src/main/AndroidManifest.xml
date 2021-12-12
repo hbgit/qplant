@@ -30,6 +30,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <!-- If your app opens https URLs -->
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="https" />
+                <!-- If your app sends emails -->
+                <action android:name="android.intent.action.SEND" />
+                <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
