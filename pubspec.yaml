@@ -67,6 +67,7 @@ flutter:
     - assets/images/tree_house.jpg
     - assets/images/prism_icon.png
     - assets/images/logo_prism.ai.png
+    - assets/images/unsplash_bye.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

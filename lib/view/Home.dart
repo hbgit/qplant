@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:qplant/view/AboutApp.dart';
 import 'package:qplant/view/IdentPlant.dart';
+import 'package:qplant/view/LogOut.dart';
 import 'package:qplant/view/MyCatalog.dart';
 import 'package:qplant/controller/LoggerDef.dart';
 
@@ -56,7 +57,7 @@ class _HomeViewState extends State<Home> {
         return AboutApp();
       case 5:
         callLog.logger.d("Draw logout screen");
-        break;
+        return LogOut();
       default:
         break;
     }
