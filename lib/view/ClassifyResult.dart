@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/view/FixeDataResult.dart';
+import 'package:qplant/view/History.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ClassifyResult extends StatefulWidget {
   final Uint8List imageInBytes;
+  final bool goBackScreen;
 
-  ClassifyResult({required this.imageInBytes});
+  ClassifyResult({required this.imageInBytes, this.goBackScreen = false});
 
   @override
   _ClassifyResultViewState createState() => _ClassifyResultViewState();
@@ -20,6 +22,8 @@ class ClassifyResult extends StatefulWidget {
 
 class _ClassifyResultViewState extends State<ClassifyResult> {
   LoggerDef callLog = LoggerDef();
+
+  bool _reloadHistory = false;
 
   bool _isMainScreen = true;
 
@@ -80,12 +84,63 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
     }
   }
 
+  _goBackButton() {
+    if (widget.goBackScreen) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+              child: GestureDetector(
+            onTap: () {
+              setState(() {
+                _reloadHistory = true;
+              });
+            },
+            child: SizedBox(
+              //width: 150,
+              height: 40,
+              child: Card(
+                shadowColor: Colors.red,
+                elevation: 5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FaIcon(
+                      FontAwesomeIcons.backspace,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    Text(
+                      "Voltar",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                  ],
+                ),
+                color: Colors.green,
+              ),
+            ),
+          )),
+          SizedBox(
+            height: 65,
+          )
+        ],
+      );
+    } else {
+      return Row();
+    }
+  }
+
   _resultScreen() {
     return Padding(
         padding: EdgeInsets.all(5),
         child: Container(
           child: Column(
             children: [
+              _goBackButton(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 //crossAxisAlignment: CrossAxisAlignment.center,
@@ -310,7 +365,13 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
   @override
   Widget build(BuildContext context) {
     _markersMaps();
-    return SingleChildScrollView(
-        child: _isMainScreen ? _resultScreen() : FixeDataResult());
+    print(widget.goBackScreen);
+    print(_isMainScreen);
+    if (_reloadHistory == false) {
+      return SingleChildScrollView(
+          child: _isMainScreen ? _resultScreen() : FixeDataResult());
+    } else {
+      return History();
+    }
   }
 }

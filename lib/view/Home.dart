@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:qplant/view/AboutApp.dart';
+import 'package:qplant/view/History.dart';
 import 'package:qplant/view/IdentPlant.dart';
 import 'package:qplant/view/LogOut.dart';
 import 'package:qplant/view/MyCatalog.dart';
@@ -51,7 +52,7 @@ class _HomeViewState extends State<Home> {
       //break;
       case 3:
         callLog.logger.d("Draw history screen");
-        break;
+        return History();
       case 4:
         callLog.logger.d("Draw about app screen");
         return AboutApp();

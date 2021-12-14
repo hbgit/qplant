@@ -1,0 +1,207 @@
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qplant/controller/LoggerDef.dart';
+import 'package:qplant/model/LocationPlant.dart';
+import 'package:qplant/model/Plant.dart';
+import 'package:qplant/view/ClassifyResult.dart';
+
+class History extends StatefulWidget {
+  @override
+  _HistoryViewState createState() => _HistoryViewState();
+}
+
+class _HistoryViewState extends State<History> {
+  LoggerDef callLog = LoggerDef();
+  List<Plant> _listPlant = [];
+  List<Plant> _listFoundPlantResult = [];
+
+  bool _showItem = false;
+
+  @override
+  void initState() {
+    _genDemoPlantData();
+    _listFoundPlantResult = _listPlant;
+    super.initState();
+  }
+
+  //Demo data
+  _genDemoPlantData() {
+    LocationPlant lp = new LocationPlant(
+        state: "RR",
+        region: "Norte",
+        latitude: 1.6740945622316539,
+        longitude: -61.50478414547887);
+
+    Plant p1 = Plant(
+        id: "d011",
+        vernacularName: "vernacular_name",
+        scientificName: "scientific_name",
+        country: "country",
+        location: lp,
+        flower: true,
+        fruit: false);
+
+    _listPlant.add(p1);
+
+    LocationPlant lp2 = new LocationPlant(
+        state: "AM",
+        region: "Norte",
+        latitude: -4.999000069645124,
+        longitude: -64.58095584285202);
+
+    Plant p2 = Plant(
+        id: "d012",
+        vernacularName: "vernacular_name 2",
+        scientificName: "scientific_name 2",
+        country: "country",
+        location: lp2,
+        flower: true,
+        fruit: false);
+
+    _listPlant.add(p2);
+
+    LocationPlant lp3 = new LocationPlant(
+        state: "AM",
+        region: "Norte",
+        latitude: -4.999000069645124,
+        longitude: -64.58095584285202);
+
+    Plant p3 = Plant(
+        id: "d012",
+        vernacularName: "vernacular_name 3",
+        scientificName: "scientific_name 3",
+        country: "country",
+        location: lp3,
+        flower: true,
+        fruit: false);
+
+    _listPlant.add(p3);
+
+    LocationPlant lp4 = new LocationPlant(
+        state: "AM",
+        region: "Norte",
+        latitude: -4.999000069645124,
+        longitude: -64.58095584285202);
+
+    Plant p4 = Plant(
+        id: "d012",
+        vernacularName: "vernacular_name 4",
+        scientificName: "scientific_name 4",
+        country: "country",
+        location: lp4,
+        flower: true,
+        fruit: false);
+
+    _listPlant.add(p4);
+  }
+
+  // This function is called whenever the text field changes
+  void _runFilter(String enteredKeyword) {
+    List<Plant> _listPlantResult = [];
+    if (enteredKeyword.isEmpty) {
+      _listPlantResult = _listPlant;
+    } else {
+      _listPlantResult = _listPlant
+          .where((element) => element.vernacularName
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+
+    // Refresh the UI
+    setState(() {
+      //_foundUsers = results;
+      _listFoundPlantResult = _listPlantResult;
+    });
+  }
+
+  _loadItem() {
+    Uint8List tp = Uint8List(12);
+    return ClassifyResult(imageInBytes: tp, goBackScreen: true);
+  }
+
+  // Home Screen
+  @override
+  Widget build(BuildContext context) {
+    //print(_listPlant);
+    return _showItem
+        ? _loadItem()
+        : Padding(
+            padding: EdgeInsets.all(7),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextField(
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.green,
+                  decoration: const InputDecoration(
+                    labelText: 'Search',
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: InputBorder.none,
+                    filled: true,
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
+                    fillColor: Colors.white,
+                    helperStyle: TextStyle(color: Colors.black, fontSize: 20),
+                  ),
+                  onChanged: (value) => _runFilter(value),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Expanded(
+                  child: _listPlant.isNotEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _listFoundPlantResult.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                ListTile(
+                                  onTap: () {
+                                    setState(() {
+                                      _showItem = true;
+                                    });
+                                  },
+                                  dense: true,
+                                  tileColor: Colors.white,
+                                  trailing: Icon(Icons.keyboard_arrow_right),
+                                  leading: FaIcon(
+                                    FontAwesomeIcons.envira,
+                                    color: Color(0xff20b2aa),
+                                    size: 20,
+                                  ),
+                                  title: Text(
+                                    _listFoundPlantResult[index].vernacularName,
+                                    style: TextStyle(
+                                        color: Color(0xff20b2aa),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 21),
+                                  ),
+                                  subtitle: Text(
+                                    _listFoundPlantResult[index].scientificName,
+                                    style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                                Divider(
+                                  color: Colors.lightGreenAccent,
+                                ),
+                              ],
+                            );
+                          },
+                        )
+                      : Text("Seu Catálago está vazio :("),
+                ),
+              ],
+            ),
+          );
+  }
+}
