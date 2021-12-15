@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .gitsecret/keys/random_seed
+android/app/google-services.json
