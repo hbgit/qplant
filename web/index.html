@@ -26,7 +26,14 @@
   <title>qplant</title>
   <link rel="manifest" href="manifest.json">
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQyOL1-l35yyyRgRtl9vQHaZDpml_Ch5w"></script>
+  <!-- Google Maps API call -->
+  <script type="module">
+    import { geoGooReadWebKey } from './geoGooReadWebKey.js';
+    var script = document.createElement("script");  // create a script DOM node
+    script.src = geoGooReadWebKey;  // set its src to the provided URL
+    document.head.appendChild(script);  // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
+  </script>
+
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to

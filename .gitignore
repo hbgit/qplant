@@ -47,3 +47,4 @@ app.*.map.json
 .gitsecret/keys/random_seed
 android/app/google-services.json
 local.properties
+web/geoGooReadWebKey.js
