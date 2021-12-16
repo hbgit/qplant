@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/AddNewUser.dart';
 import 'package:qplant/view/ForgotPassword.dart';
+import 'package:qplant/model/UserApp.dart';
 
 class Login extends StatefulWidget {
   //Login({Key key}) : super(key: key);
@@ -17,8 +21,9 @@ class _LoginState extends State<Login> {
   GlobalKey<FormState> _key = new GlobalKey();
 
   bool _validate = false;
-  late String _email, _password;
-  //String _msgError = "";
+  String _email = "test@gmail.com";
+  String _password = "123";
+  String _msgError = "";
 
   String? _validatePassWord(String? value) {
     if (value!.isEmpty) {
@@ -41,60 +46,56 @@ class _LoginState extends State<Login> {
     }
   }
 
-  // _showDialog(BuildContext context) {
-  //   AlertDialog showDia = AlertDialog(
-  //     title: Text("Sign In Error"),
-  //     content: Text(_msgError),
-  //     actions: [
-  //       FlatButton(
-  //         child: Text("OK"),
-  //         onPressed: () {
-  //           Navigator.pop(context);
-  //         },
-  //       )
-  //     ],
-  //   );
-  //
-  //   showDialog(
-  //       context: context,
-  //       builder: (context) {
-  //         return showDia;
-  //       });
-  // }
+  _showDialog(BuildContext context) {
+    AlertDialog showDia = AlertDialog(
+      title: Text("Sign In Error"),
+      content: Text(_msgError),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("OK"),
+        )
+      ],
+    );
 
-  // _signIn(User user){
-  //
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-  //
-  //   auth.signInWithEmailAndPassword(
-  //       email: user.email,
-  //       password: user.password
-  //   ).then((firebaseUser){
-  //     Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
-  //   }).catchError((onError){
-  //     setState(() {
-  //       _msgError = "E-mail or Password is not correct, please try again.";
-  //       _showDialog(context);
-  //     });
-  //   });
-  //
-  // }
+    showDialog(
+        context: context,
+        builder: (context) {
+          return showDia;
+        });
+  }
+
+  _signIn(UserApp user) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    auth
+        .signInWithEmailAndPassword(email: user.email, password: user.password)
+        .then((firebaseUser) {
+      callLog.logger.d("Login was approved in firebase");
+      callLog.logger.d("Login: " + _email);
+      callLog.logger.d("Password: " + _password);
+      Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
+    }).catchError((onError) {
+      setState(() {
+        _msgError = "E-mail or Password is not correct, please try again.";
+        _showDialog(context);
+      });
+    });
+  }
 
   _sendToServer() {
     if (_key.currentState!.validate()) {
       // No any error in validation
       _key.currentState!.save();
 
-      callLog.logger.d("Login was approved");
-      callLog.logger.d("Login: " + _email);
-      callLog.logger.d("Password: " + _password);
+      callLog.logger.d("Login was validated");
 
-      // User user = User();
-      // user.email = _email;
-      // user.password = _password;
+      UserApp user = UserApp(email: _email, password: _password);
+      _signIn(user);
 
-      //_signIn(user);
-      Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
+      //Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
     } else {
       // validation error
       setState(() {
@@ -223,8 +224,8 @@ class _LoginState extends State<Login> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller:
-                              TextEditingController(text: "test@test.com"),
+                          controller: TextEditingController(
+                              text: "herberthb12@gmail.com"),
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -248,7 +249,7 @@ class _LoginState extends State<Login> {
                           height: 20,
                         ),
                         TextFormField(
-                          controller: TextEditingController(text: "1234"),
+                          controller: TextEditingController(text: "qplant123"),
                           autofocus: true,
                           decoration: InputDecoration(
                             border: InputBorder.none,
