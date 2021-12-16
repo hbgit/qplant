@@ -21,10 +21,16 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def varGeoGooReadKey = localProperties.getProperty('geoGooReadKey')
+if (varGeoGooReadKey == null) {
+    varGeoGooReadKey = 'ERROR'
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
 
 android {
     compileSdkVersion 30
@@ -41,6 +47,7 @@ android {
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [geoGooReadKey:varGeoGooReadKey]
     }
 
     buildTypes {

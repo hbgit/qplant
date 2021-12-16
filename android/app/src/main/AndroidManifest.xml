@@ -46,6 +46,7 @@
        <!-- Google maps geolocation -->
        <meta-data
            android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyDGaVoE1fKR4KQ4x0oidysU-MhQb6XKHXc"/>
+           android:value="${geoGooReadKey}"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

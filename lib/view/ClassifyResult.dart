@@ -342,6 +342,8 @@ class _ClassifyResultViewState extends State<ClassifyResult> {
                               height: 500,
                               width: MediaQuery.of(context).size.width,
                               child: GoogleMap(
+                                myLocationButtonEnabled: false,
+                                myLocationEnabled: false,
                                 mapType: MapType.normal,
                                 markers: _markers,
                                 initialCameraPosition: _kGooglePlex,
