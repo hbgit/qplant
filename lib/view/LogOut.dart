@@ -1,5 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:qplant/controller/services/AuthService.dart';
+import 'package:qplant/view/Login.dart';
 
 class LogOut extends StatefulWidget {
   @override
@@ -52,6 +54,8 @@ class _LogOutViewState extends State<LogOut> {
                     },
                     btnOkOnPress: () {
                       debugPrint('Saindo');
+                      AuthService().signOut();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
                     })
                   ..show();
               },

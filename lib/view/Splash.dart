@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qplant/controller/LoggerDef.dart';
+import 'package:qplant/view/Home.dart';
 import 'package:qplant/view/Login.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -37,8 +39,17 @@ class _SplashViewState extends State<Splash> {
         future: _initialCheck(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
-            //return _route == "/home" ? HomeScreen() : Login();
-            return _route == "/home" ? Center() : Login();
+            //return _route == "/home" ? Center() : Login();
+            return StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.hasData) {
+                  return Home();
+                }else{
+                  return Login();
+                }
+              }
+            );
           } else {
             callLog.logger.d("Showing splash screen");
             return Center(

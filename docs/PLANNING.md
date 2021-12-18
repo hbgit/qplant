@@ -1,6 +1,14 @@
 # qplant
 App QPlant
 
+# Social Auth
+- https://www.section.io/engineering-education/flutter-social-authentication/
+- TODO: Generating a Release Key Hash - Facebook login
+- TODO: Check different logins providers  
+- File strings.xml.secret.xml is moved to docs, because build error in android/app/src/main/res/values
+- Generate debug key for facebook:
+  - keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
+
 # Planning 
 
 - Dataset

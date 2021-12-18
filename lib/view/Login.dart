@@ -8,6 +8,7 @@ import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/view/AddNewUser.dart';
 import 'package:qplant/view/ForgotPassword.dart';
 import 'package:qplant/model/UserApp.dart';
+import 'package:qplant/controller/services/AuthService.dart';
 
 class Login extends StatefulWidget {
   //Login({Key key}) : super(key: key);
@@ -140,6 +141,7 @@ class _LoginState extends State<Login> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          AuthService().fbSignIn();
                           callLog.logger.d("Facebook login was adoted");
                         },
                         child: SizedBox(
@@ -182,6 +184,7 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
+                          AuthService().signInWithGoogle();
                           callLog.logger.d("Google login was adopted");
                         },
                         child: SizedBox(

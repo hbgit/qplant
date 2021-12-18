@@ -48,3 +48,4 @@ app.*.map.json
 android/app/google-services.json
 local.properties
 web/geoGooReadWebKey.js
+android/app/src/main/res/values/strings.xml
