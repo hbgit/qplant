@@ -1,7 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:qplant/controller/services/AuthService.dart';
-import 'package:qplant/view/Login.dart';
+//import 'package:qplant/view/Login.dart';
+import 'package:qplant/view/Splash.dart';
 
 class LogOut extends StatefulWidget {
   @override
@@ -52,10 +54,14 @@ class _LogOutViewState extends State<LogOut> {
                     onDissmissCallback: (type) {
                       debugPrint('Dialog Dissmiss from callback $type');
                     },
-                    btnOkOnPress: () {
+                    btnOkOnPress: () async {
                       debugPrint('Saindo');
-                      AuthService().signOut();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                      final String uid = FirebaseAuth.instance.currentUser!.uid;
+                      await AuthService().signOut();
+
+                      print('>>> $uid has successfully signed out.');
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Splash()));
                     })
                   ..show();
               },

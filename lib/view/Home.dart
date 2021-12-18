@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -27,6 +28,8 @@ class _HomeViewState extends State<Home> {
   // Header
   String _formattedDate =
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
+
+  String? _getUserName = FirebaseAuth.instance.currentUser!.displayName;
 
   _onSelectItem(int index) {
     if (index == -1) {
@@ -120,7 +123,7 @@ class _HomeViewState extends State<Home> {
                     height: 15,
                   ),
                   Text(
-                    "Olá: Herbert",
+                    "Olá: $_getUserName",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,

@@ -14,7 +14,7 @@ class Splash extends StatefulWidget {
 class _SplashViewState extends State<Splash> {
   //final Auth _auth = Auth();
   LoggerDef callLog = LoggerDef();
-  String _route = "/";
+  //String _route = "/";
 
   Future<bool> _initialCheck() async {
     // bool isLogged = false; //await _auth.isLogged();
@@ -41,15 +41,14 @@ class _SplashViewState extends State<Splash> {
           if (snapshot.hasData && snapshot.data == true) {
             //return _route == "/home" ? Center() : Login();
             return StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  return Home();
-                }else{
-                  return Login();
-                }
-              }
-            );
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Home();
+                  } else {
+                    return Login();
+                  }
+                });
           } else {
             callLog.logger.d("Showing splash screen");
             return Center(
