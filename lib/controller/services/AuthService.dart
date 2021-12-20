@@ -14,12 +14,18 @@ class AuthService {
 
   _setAuthFromMultipleProviders(
       AuthCredential? credential, List<String> emailList) async {
+    print(emailList.first);
     if (emailList.first == "google.com") {
       //await _auth.signIn
-      print(emailList.first);
       print(credential);
       //this.service.signInwithGoogle(true, credential);
+      signInWithGoogle(true, credential);
     }
+  }
+
+  Future<UserCredential?> linkProviders(
+      UserCredential userCredential, AuthCredential newCredential) async {
+    return await userCredential.user!.linkWithCredential(newCredential);
   }
 
   //fb signIn
@@ -74,14 +80,13 @@ class AuthService {
         if (e.code == 'account-exists-with-different-credential') {
           List<String> emailList =
               await FirebaseAuth.instance.fetchSignInMethodsForEmail(e.email!);
-          print(emailList.first);
           _setAuthFromMultipleProviders(e.credential, emailList);
         }
       }
     }
   }
 
-  signInWithGoogle() async {
+  signInWithGoogle([bool link = false, AuthCredential? authCredential]) async {
     try {
       // Trigger the authentication flow
       final GoogleSignInAccount? googleUser =
@@ -96,8 +101,16 @@ class AuthService {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
       // Once signed in, return the UserCredential
-      return await _auth.signInWithCredential(credential);
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      if (link) {
+        await linkProviders(userCredential, authCredential!);
+      }
+
+      return userCredential;
     } catch (e) {
       // SOLUTION from: https://petercoding.com/firebase/2021/06/06/using-twitter-authentication-with-firebase-in-flutter/#link-multiple-auth-providers
       if (e is FirebaseAuthException) {
