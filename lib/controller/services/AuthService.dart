@@ -3,9 +3,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:qplant/model/Resource.dart';
+import 'package:twitter_login/twitter_login.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -27,6 +29,53 @@ class AuthService {
       UserCredential userCredential, AuthCredential newCredential) async {
     return await userCredential.user!.linkWithCredential(newCredential);
   }
+
+  Future<Resource?> signInWithTwitter() async {
+
+    try{
+      final twitterLogin = TwitterLogin(
+        apiKey: dotenv.env['API_TWITTER_KEY']!,
+        apiSecretKey: dotenv.env['API_TWITTER_SECRET_KEY']!,
+        redirectURI: "qplant://",
+      );
+
+      final authResult = await twitterLogin.login();
+      print(authResult.status);
+
+      switch (authResult.status) {
+
+        case TwitterLoginStatus.loggedIn:
+          final AuthCredential twitterAuthCredential =
+          TwitterAuthProvider.credential(
+              accessToken: authResult.authToken!,
+              secret: authResult.authTokenSecret!);
+
+          final userCredential =
+          await _auth.signInWithCredential(twitterAuthCredential);
+          return Resource(status: Status.Success);
+
+        case TwitterLoginStatus.cancelledByUser:
+          print(">>>>>>> TwitterLoginStatus.cancelledByUser");
+          return Resource(status: Status.Success);
+        case TwitterLoginStatus.error:
+          print(">>>>>>> TwitterLoginStatus.error");
+          return Resource(status: Status.Error);
+        default:
+          return null;
+      }
+    }catch(e){
+      if (e is FirebaseAuthException) {
+        print(">>>>>>>>>>> TWITTER");
+        if (e.code == 'account-exists-with-different-credential') {
+          List<String> emailList =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(e.email!);
+          _setAuthFromMultipleProviders(e.credential, emailList);
+        }
+      }
+    }
+
+  }
+
 
   //fb signIn
   fbSignIn() async {

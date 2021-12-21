@@ -163,6 +163,7 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () {
+                          AuthService().signInWithTwitter();
                           callLog.logger.d("Twitter login was adoted");
                         },
                         child: SizedBox(

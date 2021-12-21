@@ -8,6 +8,8 @@ App QPlant
 - File strings.xml.secret.xml is moved to docs, because build error in android/app/src/main/res/values
 - Generate debug key for facebook:
   - keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
+- Term of services: https://app-privacy-policy-generator.firebaseapp.com/
+  - https://app.flycricket.com/app/8e6c82375b1f4c42b2f5e10596472bf2 
 
 # Planning 
 
