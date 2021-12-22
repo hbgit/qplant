@@ -31,8 +31,7 @@ class AuthService {
   }
 
   Future<Resource?> signInWithTwitter() async {
-
-    try{
+    try {
       final twitterLogin = TwitterLogin(
         apiKey: dotenv.env['API_TWITTER_KEY']!,
         apiSecretKey: dotenv.env['API_TWITTER_SECRET_KEY']!,
@@ -43,14 +42,13 @@ class AuthService {
       print(authResult.status);
 
       switch (authResult.status) {
-
         case TwitterLoginStatus.loggedIn:
           final AuthCredential twitterAuthCredential =
-          TwitterAuthProvider.credential(
-              accessToken: authResult.authToken!,
-              secret: authResult.authTokenSecret!);
+              TwitterAuthProvider.credential(
+                  accessToken: authResult.authToken!,
+                  secret: authResult.authTokenSecret!);
 
-          final userCredential =
+          //final userCredential =
           await _auth.signInWithCredential(twitterAuthCredential);
           return Resource(status: Status.Success);
 
@@ -63,19 +61,17 @@ class AuthService {
         default:
           return null;
       }
-    }catch(e){
+    } catch (e) {
       if (e is FirebaseAuthException) {
         print(">>>>>>>>>>> TWITTER");
         if (e.code == 'account-exists-with-different-credential') {
           List<String> emailList =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(e.email!);
+              await FirebaseAuth.instance.fetchSignInMethodsForEmail(e.email!);
           _setAuthFromMultipleProviders(e.credential, emailList);
         }
       }
     }
-
   }
-
 
   //fb signIn
   fbSignIn() async {
