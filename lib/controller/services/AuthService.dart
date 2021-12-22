@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/model/Resource.dart';
+import 'package:qplant/model/UserApp.dart';
 import 'package:twitter_login/twitter_login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -13,6 +15,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class AuthService {
   late var _resultAuth;
+  LoggerDef callLog = LoggerDef();
 
   _setAuthFromMultipleProviders(
       AuthCredential? credential, List<String> emailList) async {
@@ -168,6 +171,36 @@ class AuthService {
         }
       }
     }
+  }
+
+  // Login using email
+  Future<bool> signInByEmailForm(UserApp user) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    try {
+      await auth.signInWithEmailAndPassword(
+          email: user.email, password: user.password);
+      callLog.logger.d("Login was approved in firebase");
+      return Future<bool>.value(true);
+    } catch (e) {
+      print(e);
+      return Future<bool>.value(false);
+    }
+
+    // await auth
+    //     .signInWithEmailAndPassword(email: user.email, password: user.password)
+    //     .then((firebaseUser) {
+    //   callLog.logger.d("Login was approved in firebase");
+    //   callLog.logger.d("Login: " + user.email);
+    //   callLog.logger.d("Password: " + user.password);
+    //
+    //   return Future<bool>.value(true);
+    //   //Navigator.pushReplacementNamed(context, RouteGenerator.ROUTE_HOME);
+    // }).catchError((onError) {
+    //   return Future<bool>.value(false);
+    // });
+    //
+    // return Future<bool>.value(true);
   }
 
   //Sign out
