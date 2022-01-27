@@ -27,15 +27,16 @@ class _LoginState extends State<AddNewUser> {
   String? _validateName(String value) {
     String pattern = r'(^[a-zA-Z ]*$)';
     RegExp regExp = new RegExp(pattern);
+    RegExp regExp2 = new RegExp(r"([a-zA-Z]+)");
     print(value.length);
     if (value.length == 0) {
       return "Nome é obrigatório.";
     } else if (value.length < 2) {
       return "O nome ter mais 2 letras.";
     } else if (!regExp.hasMatch(value)) {
-      return "Name must be a-z and A-Z";
-    } else if (regExp.allMatches(value).length <= 1) {
-      return "Primeiro e último nome";
+      return "O nome deve conter a-z ou A-Z.";
+    } else if (regExp2.allMatches(value).length <= 1) {
+      return "Primeiro e último nome.";
     }
     return null;
   }
@@ -165,6 +166,11 @@ class _LoginState extends State<AddNewUser> {
                                 keyboardType: TextInputType.text,
                                 validator: (value) {
                                   return _validateName(value!);
+                                },
+                                onSaved: (String? v) {
+                                  _name = v!;
+                                  callLog.logger
+                                      .d("The name used as input: " + _name);
                                 },
                               ),
                               SizedBox(
