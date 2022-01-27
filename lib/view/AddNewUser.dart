@@ -1,13 +1,19 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qplant/controller/LoggerDef.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:qplant/controller/RouteGenerator.dart';
 import 'package:qplant/model/UserApp.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:multiavatar/multiavatar.dart';
+import 'package:qplant/model/paint_svg.dart';
+import 'package:qplant/model/svg_wrapper.dart';
 
 class AddNewUser extends StatefulWidget {
   //Login({Key key}) : super(key: key);
@@ -23,6 +29,10 @@ class _LoginState extends State<AddNewUser> {
   late String _name, _email, _password;
   //String _msgError = "";
   GlobalKey<FormState> _key = new GlobalKey();
+
+  //Avatar
+  String svgCode = multiavatar('X-SLAYER', trBackground: true);
+  late DrawableRoot svgRoot;
 
   String? _validateName(String value) {
     String pattern = r'(^[a-zA-Z ]*$)';
@@ -98,6 +108,7 @@ class _LoginState extends State<AddNewUser> {
 
       UserApp user = UserApp(email: _email, password: _password);
       user.name = _name;
+      user.urlImage = svgCode.toString();
       _addNewUser(user);
     } else {
       // validation error
@@ -106,6 +117,44 @@ class _LoginState extends State<AddNewUser> {
         _key.currentState!.deactivate();
       });
     }
+  }
+
+  _generateSvg() async {
+    return SvgWrapper(svgCode).generateLogo().then((value) {
+      setState(() {
+        svgRoot = value!;
+      });
+    });
+  }
+
+  Widget _avatarPreview() {
+    //_generateSvg();
+    return Container(
+      height: 180.0,
+      width: 180.0,
+      child: GestureDetector(
+        child: CustomPaint(
+          painter: MyPainter(svgRoot, Size(180.0, 180.0)),
+        ),
+        onTap: () {
+          var l = new List.generate(12, (_) => new Random().nextInt(100));
+          setState(() {
+            svgCode = multiavatar(l.join());
+          });
+          _generateSvg();
+        },
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _generateSvg();
   }
 
   //Login Screen
@@ -135,12 +184,9 @@ class _LoginState extends State<AddNewUser> {
                     children: [
                       Center(
                         child: Padding(
-                            padding: EdgeInsets.only(bottom: 21),
-                            child: FaIcon(
-                              FontAwesomeIcons.envira,
-                              color: Colors.white,
-                              size: 90,
-                            )),
+                          padding: EdgeInsets.only(bottom: 21),
+                          child: _avatarPreview(),
+                        ),
                       ),
                       SizedBox(
                         height: 20,

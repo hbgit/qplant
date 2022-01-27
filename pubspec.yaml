@@ -54,6 +54,8 @@ dependencies:
   twitter_login: ^4.0.1
   flutter_dotenv: ^5.0.2
   flutter_spinkit: ^5.1.0
+  flutter_svg: ^1.0.3
+  multiavatar: ^0.1.5
 
 
 dev_dependencies:

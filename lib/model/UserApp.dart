@@ -8,7 +8,11 @@ class UserApp {
   UserApp({required this.email, required this.password});
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {"name": this.name, "email": this.email};
+    Map<String, dynamic> map = {
+      "name": this.name,
+      "email": this.email,
+      "image_avatar": this.urlImage
+    };
     return map;
   }
 }
