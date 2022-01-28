@@ -74,7 +74,8 @@ class _LoginState extends State<Login> {
       _key.currentState!.save();
       callLog.logger.d("Login was validated");
 
-      UserApp user = UserApp(email: _email, password: _password);
+      UserApp user = UserApp(email: _email);
+      user.password = _password;
       AuthService().signInByEmailForm(user).then((value) {
         print(value);
         if (value == false) {

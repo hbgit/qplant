@@ -106,8 +106,9 @@ class _LoginState extends State<AddNewUser> {
       print("Email $_email");
       print("Pass $_password");
 
-      UserApp user = UserApp(email: _email, password: _password);
+      UserApp user = UserApp(email: _email);
       user.name = _name;
+      user.password = _password;
       user.urlImage = svgCode.toString();
       _addNewUser(user);
     } else {

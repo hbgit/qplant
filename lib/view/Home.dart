@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:qplant/controller/services/UserDB.dart';
+import 'package:qplant/model/UserApp.dart';
 import 'package:qplant/view/AboutApp.dart';
 import 'package:qplant/view/History.dart';
 import 'package:qplant/view/IdentPlant.dart';
@@ -11,6 +15,7 @@ import 'package:qplant/controller/LoggerDef.dart';
 
 // the seq is equal to the _getDrawerItem function
 enum HAM_MENU { home, id_planta, my_catalog, history, about_app, logout }
+final FirebaseAuth auth = FirebaseAuth.instance;
 
 class Home extends StatefulWidget {
   @override
@@ -19,17 +24,33 @@ class Home extends StatefulWidget {
 
 class _HomeViewState extends State<Home> {
   LoggerDef callLog = LoggerDef();
+  UserDB ud = UserDB();
+  User userLog = auth.currentUser!;
   //final Auth _auth = Auth();
   // Menu var
   int _selectedIndex = HAM_MENU.my_catalog.index;
   //int _lastSelectedIndex = 0;
   String _menuPath = "Menu";
+  UserApp userApp = UserApp(email: "email@qplant.com");
+  Map<String, dynamic> _dataUserDB = {};
 
   // Header
   String _formattedDate =
       DateFormat('EEEE d MMM kk:mm:ss', 'pt_BR').format(DateTime.now());
 
-  String? _getUserName = FirebaseAuth.instance.currentUser!.displayName;
+  //String? _getUserName = FirebaseAuth.instance.currentUser!.displayName;
+  Future<Map<String, dynamic>> recoveryDataUser() async {
+    User userLog = auth.currentUser!;
+    UserDB ud = UserDB();
+    //Map<String, dynamic> dataDbUser = await ud.recoveryUserDocument(userLog.uid);
+    return await ud.recoveryUserDocument(userLog.uid) as Map<String, dynamic>;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //recoveryDataUser();
+  }
 
   _onSelectItem(int index) {
     if (index == -1) {
@@ -80,9 +101,33 @@ class _HomeViewState extends State<Home> {
     }
   }
 
-  // Home Screen
-  @override
-  Widget build(BuildContext context) {
+  _setUserName() {
+    userApp.email = _dataUserDB['email'];
+    userApp.name = _dataUserDB['name'];
+    userApp.urlImage = _dataUserDB['image_avatar'];
+  }
+
+  Widget _userAvatar() {
+    return Container(
+      height: 80.0,
+      width: 80.0,
+      child: GestureDetector(
+        child: SvgPicture.string(userApp.urlImage),
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Colors.white,
+          width: 5,
+        ),
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  Widget _mainScreen() {
+    _setUserName();
+
     return Scaffold(
       backgroundColor: Color(0xff075E54),
       appBar: AppBar(
@@ -113,17 +158,13 @@ class _HomeViewState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Center(
-                    child: FaIcon(
-                      FontAwesomeIcons.earlybirds,
-                      color: Colors.white,
-                      size: 50,
-                    ),
+                    child: _userAvatar(),
                   ),
                   SizedBox(
                     height: 15,
                   ),
                   Text(
-                    "Olá: $_getUserName",
+                    "Olá: " + userApp.name,
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,
@@ -139,6 +180,9 @@ class _HomeViewState extends State<Home> {
                 ],
               ),
               decoration: BoxDecoration(color: Color(0xff0c7e47)),
+            ),
+            SizedBox(
+              height: 10,
             ),
             ListView(
               shrinkWrap: true,
@@ -264,6 +308,19 @@ class _HomeViewState extends State<Home> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 70,
+            ),
+            Center(
+              child: FaIcon(
+                FontAwesomeIcons.earlybirds,
+                color: Colors.white,
+                size: 50,
+              ),
+            ),
+            Text('QPlant',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 15)),
           ],
         ),
       ),
@@ -321,6 +378,41 @@ class _HomeViewState extends State<Home> {
           ),
         ],
       ),
+    );
+  }
+
+  // Home Screen
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: ud.recoveryUserDocument(userLog.uid),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          //Map<String, dynamic> data = snapshot.data as Map<String, dynamic>;
+          //print(snapshot.data['email']);
+          //print(querySnapshot.data());
+          // userApp.email = snapshot.data['email'];
+          // userApp.urlImage = snapshot.data['image_avatar'];
+          // userApp.name = snapshot.data['name'];
+          _dataUserDB['email'] = snapshot.data['email'];
+          _dataUserDB['image_avatar'] = snapshot.data['image_avatar'];
+          _dataUserDB['name'] = snapshot.data['name'];
+          return _mainScreen();
+        }
+
+        return Container(
+          color: Color(0xff0c7e47),
+          child: SpinKitFadingCube(
+            itemBuilder: (BuildContext context, int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  color: index.isEven ? Colors.white : Colors.green,
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -5,7 +5,7 @@ class UserApp {
   late String urlImage;
   late String password;
 
-  UserApp({required this.email, required this.password});
+  UserApp({required this.email});
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
