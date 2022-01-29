@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qplant/controller/LoggerDef.dart';
 import 'package:qplant/model/LocationPlant.dart';
@@ -165,6 +166,25 @@ class _MyCatalogViewState extends State<MyCatalog> {
                                   child: Image.network(
                                     "https://hmjardins.com.br/tok/wp-content/uploads/2015/06/Goiabeira.jpg",
                                     height: 140,
+                                    loadingBuilder: (context, child, loadingProgress){
+                                      if(loadingProgress == null){
+                                        return child;
+                                      }
+                                      return Center(
+                                        child: Container(
+                                          color: Color(0xff0c7e47),
+                                          child: SpinKitFadingCube(
+                                            itemBuilder: (BuildContext context, int index) {
+                                              return DecoratedBox(
+                                                decoration: BoxDecoration(
+                                                  color: index.isEven ? Colors.white : Colors.green,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ],
